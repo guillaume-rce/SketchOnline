@@ -1,3 +1,4 @@
+[//]: <> (Version du readme: 2.1)
 # SketchOnline
 
 ![Logo](doc/readme/logo.png)
