@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Register - SketchOnline</title>
-    <meta property="og:title" content="Register - SketchOnline" />
+    <title>Login - SketchOnline</title>
+    <meta property="og:title" content="Login - SketchOnline" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -43,35 +43,19 @@
     />
   </head>
   <body>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../Styles/style.css" />
     <div>
-      <link href="./register.css" rel="stylesheet" />
+      <link href="../Styles/login.css" rel="stylesheet" />
 
-      <div class="register-container">
-        <form class="register-form">
+      <div class="login-container">
+        <form class="login-form">
           <input
             type="text"
             id="pseudo"
             name="pseudo"
             required=""
             placeholder="Pseudo"
-            class="register-textinput input"
-          />
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required=""
-            placeholder="Name"
-            class="register-textinput1 input"
-          />
-          <input
-            type="text"
-            id="firstname"
-            name="firstname"
-            required=""
-            placeholder="First name"
-            class="register-textinput2 input"
+            class="login-textinput input"
           />
           <input
             type="password"
@@ -79,16 +63,26 @@
             name="password"
             required=""
             placeholder="Password"
-            class="register-textinput3 input"
+            class="login-textinput1 input"
           />
-          <button name="submit" type="button" class="register-button button">
+          <div class="login-container1">
+            <label for="save">Remember me</label>
+            <input
+              type="checkbox"
+              id="save"
+              name="Save"
+              checked="true"
+              class="login-checkbox"
+            />
+          </div>
+          <button name="submit" type="button" class="login-button button">
             <span>
-              <span>Sign up</span>
+              <span>Sign in</span>
               <br />
             </span>
           </button>
           <span>
-            <span>If you already have an account, <a href="./login.html"><u>login</u></a>!</span>
+            <span>If it is your first time, <a href="./register.html"><u>register</u></a>!</span>
             <br />
           </span>
         </form>

@@ -1,7 +1,7 @@
-[//]: <> (Version du readme: 2.1)
+[//]: <> (Version du readme: 3.0)
 # SketchOnline
 
-![Logo](doc/readme/logo.png)
+![Logo](Documentation/readme/logo.png)
 
 
 ## Spécifications du projet 
@@ -43,6 +43,41 @@
 - **Utilisateurs :** ID unique, informations personnelles.
 - **Fonctionnalités supplémentaires :** Suggestions bienvenues.
 
-### Diagramme conceptuel
+## Diagramme conceptuel
 
-![Alt text](doc/readme/diagramme.png)
+![Alt text](Documentation/readme/diagramme.png)
+
+### Arborescence du projet
+
+SketchOnline/
+├── Backend
+├── Database
+│   ├── diagramme.png
+│   └── SQL_Scripts
+├── Documentation
+│   ├── CahierDesCharges.pdf
+│   └── README.md
+├── Frontend
+│   ├── assets
+│   │   ├── home_bg.png
+│   │   ├── login_register_bg.png
+│   │   └── logo.png
+│   ├── Pages
+│   │   ├── 404.html
+│   │   ├── competition.html
+│   │   ├── event.html
+│   │   ├── gallery.html
+│   │   ├── index.html
+│   │   ├── login.html
+│   │   └── register.html
+│   ├── Scripts
+│   └── Styles
+│       ├── 404.css
+│       ├── competition.css
+│       ├── event.css
+│       ├── gallery.css
+│       ├── index.css
+│       ├── login.css
+│       ├── register.css
+│       └── style.css
+└── package.json

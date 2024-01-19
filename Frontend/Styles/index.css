@@ -180,7 +180,7 @@
   justify-content: center;
   background-repeat:no-repeat;
     background-position: center center;
-  background-image: url("ressources/home_bg.png");
+  background-image: url("../assets/home_bg.png");
 }
 .home-container1 {
   gap: var(--dl-space-space-oneandhalfunits);

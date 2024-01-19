@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>404 - Not Found</title>
+    <title>Register - SketchOnline</title>
+    <meta property="og:title" content="Register - SketchOnline" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -42,20 +43,55 @@
     />
   </head>
   <body>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../Styles/style.css" />
     <div>
-      <link href="./404.css" rel="stylesheet" />
+      <link href="../Styles/register.css" rel="stylesheet" />
 
-      <div class="not-found-container">
-        <h3>OOPS! PAGE NOT FOUND</h3>
-        <div class="not-found-container1">
-          <h1 class="not-found-text1">404</h1>
-        </div>
-        <div class="not-found-container2">
-          <h2 class="not-found-text2">
-            WE ARE SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND
-          </h2>
-        </div>
+      <div class="register-container">
+        <form class="register-form">
+          <input
+            type="text"
+            id="pseudo"
+            name="pseudo"
+            required=""
+            placeholder="Pseudo"
+            class="register-textinput input"
+          />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required=""
+            placeholder="Name"
+            class="register-textinput1 input"
+          />
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            required=""
+            placeholder="First name"
+            class="register-textinput2 input"
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required=""
+            placeholder="Password"
+            class="register-textinput3 input"
+          />
+          <button name="submit" type="button" class="register-button button">
+            <span>
+              <span>Sign up</span>
+              <br />
+            </span>
+          </button>
+          <span>
+            <span>If you already have an account, <a href="./login.html"><u>login</u></a>!</span>
+            <br />
+          </span>
+        </form>
       </div>
     </div>
     <script

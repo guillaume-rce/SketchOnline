@@ -9,7 +9,7 @@
   justify-content: center;
   background-repeat:no-repeat;
   background-position: center center;
-  background-image: url("ressources/login_register_bg.png");
+  background-image: url("../assets/login_register_bg.png");
 }
 .register-form {
   gap: var(--dl-space-space-unit);
