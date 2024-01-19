@@ -1,4 +1,4 @@
-[//]: <> (Version du readme: 3.0)
+[//]: <> (Version du readme: 3.1)
 # SketchOnline
 
 ![Logo](Documentation/readme/logo.png)
@@ -49,6 +49,7 @@
 
 ### Arborescence du projet
 
+```bash
 SketchOnline/
 ├── Backend
 ├── Database
@@ -81,3 +82,4 @@ SketchOnline/
 │       ├── register.css
 │       └── style.css
 └── package.json
+```
