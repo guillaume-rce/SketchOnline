@@ -2,6 +2,7 @@ const token = getCookie('token');
 
 if (token) {
     console.log('User is logged in');
+    GetProfileInfos();
 } else {
     console.log('User is not logged in');
 }
