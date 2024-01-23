@@ -10,7 +10,7 @@ function OnRegisterClick() {
 }
 
 function OnRegisterSuccess() {
-
+    alert("Register sucess !")
 }
 
 function OnRegisterError(error) {
