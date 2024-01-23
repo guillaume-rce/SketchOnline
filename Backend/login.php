@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = $data->password;
         
         // Établir une connexion à la base de données
-        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME,DB_PORT);
         if ($mysqli->connect_error) {
             $response['error'] = "La connexion à la base de données a échoué : " . $mysqli->connect_error;
         } else {

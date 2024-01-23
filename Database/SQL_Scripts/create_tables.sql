@@ -67,7 +67,7 @@ CREATE TABLE Utilisateurs (
     prenom VARCHAR(255),
     adresse VARCHAR(255),
     photo VARCHAR(255),
-    login VARCHAR(255),
+    emai VARCHAR(255),
     password VARCHAR(255),
     FOREIGN KEY (numClub) REFERENCES Club(numClub)
 );

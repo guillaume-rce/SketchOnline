@@ -11,7 +11,7 @@ function OnRegisterClick() {
 
 function OnRegisterSuccess() {
     // Redirect to the home page
-    window.location.href = "Frontend/HTML/index.html";
+    window.location.href = "./index.html";
 }
 
 function OnRegisterError(error) {

@@ -10,7 +10,7 @@ function OnLoginSuccess(response) {
         // Save token in the cookie
         document.cookie = "token=" + response.token + ";";
         // Redirect to the home page
-        window.location.href = "Frontend/HTML/index.html";
+        window.location.href = "./index.html";
     } else if (response && response.error) {
         alert("Erreur de connexion : " + response.error);
     } else {
