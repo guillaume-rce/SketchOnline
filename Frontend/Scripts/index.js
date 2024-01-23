@@ -11,34 +11,73 @@ function getCookie(name) {
     return cookieValue ? cookieValue.pop() : '';
 }
 
-function ShowProfile(token) {
-    var data = {
-        token: token
+function GetProfileInfos() {
+    data = {
+        token: token,
+        infos: ['photo', 'rank']
     };
+
     $.ajax({
         url: "http://localhost:8080/Backend/profile.php",
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function(data) {
-            OnShowProfileSuccess(data);
+            OnProfileInfosSuccess(data);
         },
         error: function(error) {
-            OnShowProfileError(error);
+            OnProfileInfosError(error);
         }
     });
 }
 
-function OnShowProfileSuccess(data) {
-    // The goal is to display the profile image in the home page
-    
+function OnProfileInfosSuccess(data) {
+    // data = {
+    //     photo: 'https://xxxxx.xx/xxxx/xxxx.jpg',
+    //     rank: 'xxxx'
+    // };
+
+    // Get the home-buttons element
+    var homeButtons = document.getElementById('home-connection');
+
+    // Create the home-profile element
+    homeButtons.classList.remove('home-buttons');
+    homeButtons.classList.add('home-profile');
+
+    // Create the home-profile-image element
+    var homeProfileImage = document.createElement('img');
+    homeProfileImage.src = data.photo;
+    homeProfileImage.alt = 'Profile image';
+    homeProfileImage.classList.add('home-profile-image');
+
+    // Change the color of the home-profile-image border
+    homeProfileImage.style.borderColor = GetColorVar(data.rank);
+
+    // Add the home-profile-image element to the home-profile element
+    homeButtons.appendChild(homeProfileImage);
+
 }
 
-function OnShowProfileError(error) {
-    alert(error);
+function OnProfileInfosError(error) {
+    console.log(error);
 }
 
-
+function GetColorVar(rank) {
+    switch (rank) {
+        case 'admin':
+            return 'var(--dl-color-rank-admin)';
+        case 'president':
+            return 'var(--dl-color-rank-president)';
+        case 'director':
+            return 'var(--dl-color-rank-director)';
+        case 'competitor':
+            return 'var(--dl-color-rank-competitor)';
+        case 'evaluator':
+            return 'var(--dl-color-rank-evaluator)';
+        default:
+            return 'var(--dl-color-rank-user)';
+    }
+}
 
 /*
 

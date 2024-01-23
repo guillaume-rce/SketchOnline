@@ -33,6 +33,14 @@
   --dl-space-space-fourunits: 64px;
   --dl-space-space-threeunits: 48px;
   --dl-space-space-oneandhalfunits: 24px;
+
+  /* Rank Colors */
+  --dl-color-rank-admin: #2B00FF;
+  --dl-color-rank-president: #00EFFF;
+  --dl-color-rank-director: #FFA07A;
+  --dl-color-rank-competitor: #A9A9A9;
+  --dl-color-rank-evaluator: #DAA520;
+  --dl-color-rank-user: #D500FF;
 }
 .button {
   color: var(--dl-color-gray-black);
