@@ -10,7 +10,8 @@ function OnRegisterClick() {
 }
 
 function OnRegisterSuccess() {
-    alert("Register sucess !")
+    // Redirect to the home page
+    window.location.href = "Frontend/HTML/index.html";
 }
 
 function OnRegisterError(error) {
