@@ -1,6 +1,10 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
+
 session_start();
-require_once('../Database/configdb.php');
+require_once('./Database/configdb.php');
 
 $response = array(); // Tableau pour stocker la réponse
 

@@ -35,7 +35,7 @@ function Register(username, name, firstname, email, password) {
             password: this.password
         };
         $.ajax({
-            url: "http://localhost:8080/Backend/inscription.php",
+            url: "http://localhost:8080/Backend/register.php",
             type: "POST",
             data: JSON.stringify(data),
             contentType: "application/json",

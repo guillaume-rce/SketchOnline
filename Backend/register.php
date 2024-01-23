@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Erreur lors de la préparation de la requête : " . $mysqli->error);
     }
 
-    $stmt->bind_param("sssss", $username, $name, $firstname, $email, $password);
+    $v=$stmt->execute(array( $username, $name, $firstname, $email, $password));
 
-    if ($stmt->execute() === TRUE) {
+    if ($v) {
         echo "Inscription réussie !";
     } else {
         echo "Erreur lors de l'inscription : " . $stmt->error;
