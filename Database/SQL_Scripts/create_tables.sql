@@ -62,9 +62,10 @@ CREATE TABLE Evaluateur (
 CREATE TABLE Utilisateurs (
     numUtilisateur INT PRIMARY KEY AUTO_INCREMENT,
     numClub INT,
+    pseudo VARCHAR(255),
     nom VARCHAR(255),
     prenom VARCHAR(255),
-    adresse VARCHAR(255),
+    adresse VARCHAR(255),c
     login VARCHAR(255),
     password VARCHAR(255),
     FOREIGN KEY (numClub) REFERENCES Club(numClub)

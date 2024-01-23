@@ -20,7 +20,7 @@
   background-color: var(--dl-color-gray-white);
 }
 .home-image {
-  height: 2rem;
+  height: 6rem;
 }
 .home-desktop-menu {
   flex: 1;
@@ -71,6 +71,21 @@
 .home-register {
   text-decoration: none;
 }
+
+.home-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.home-profile-image {
+  width: 60px;
+  object-fit: cover;
+  border-color: var(--dl-color-gray-black);
+  border-width: 4px;
+  border-radius: var(--dl-radius-radius-round);
+}
+
 .home-burger-menu {
   display: none;
 }

@@ -1,6 +1,10 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
+
 session_start();
-require_once('../Database/configdb.php');
+require_once('./Database/configdb.php');
 
 $response = array(); // Tableau pour stocker la réponse
 
@@ -12,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($mysqli->connect_error) {
         $response['error'] = "La connexion à la base de données a échoué : " . $mysqli->connect_error;
     } else {
-        $query = "SELECT * FROM Utilisateurs WHERE pseudo = ?";
+        $query = "SELECT * FROM Utilisateurs WHERE nom = ?";
         $stmt = $mysqli->prepare($query);
 
         if ($stmt === FALSE) {
