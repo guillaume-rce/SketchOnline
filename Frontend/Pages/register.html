@@ -47,7 +47,7 @@
     <div>
       <link href="../Styles/register.css" rel="stylesheet" />
 
-      <div class="register-container">
+      <div class="register-container"  id="registrationForm" method="post" action="../../Backend/inscription.php">
         <form class="register-form">
           <input
             type="text"
@@ -81,7 +81,7 @@
             placeholder="Password"
             class="register-textinput3 input"
           />
-          <button name="submit" type="button" class="register-button button">
+          <button name="submit" type="submit" class="register-button button">
             <span>
               <span>Sign up</span>
               <br />
@@ -94,6 +94,7 @@
         </form>
       </div>
     </div>
+    <script src="../Scripts/inscription.js" defer></script>
     <script
       defer=""
       src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
