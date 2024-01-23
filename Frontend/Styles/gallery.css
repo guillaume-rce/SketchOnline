@@ -20,7 +20,7 @@
   background-color: var(--dl-color-gray-white);
 }
 .gallery-image {
-  height: 2rem;
+  height: 6rem;
 }
 .gallery-desktop-menu {
   flex: 1;

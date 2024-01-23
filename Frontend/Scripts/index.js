@@ -56,7 +56,6 @@ function OnProfileInfosSuccess(data) {
 
     // Add the home-profile-image element to the home-profile element
     homeButtons.appendChild(homeProfileImage);
-
 }
 
 function OnProfileInfosError(error) {
