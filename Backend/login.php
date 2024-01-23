@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($mysqli->connect_error) {
         $response['error'] = "La connexion à la base de données a échoué : " . $mysqli->connect_error;
     } else {
-        $query = "SELECT * FROM Utilisateurs WHERE pseudo = ?";
+        $query = "SELECT * FROM Utilisateurs WHERE nom = ?";
         $stmt = $mysqli->prepare($query);
 
         if ($stmt === FALSE) {
