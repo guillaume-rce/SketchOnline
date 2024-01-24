@@ -35,7 +35,7 @@ function OnGetEventsError(jqXHR, textStatus, errorThrown) {
 }
 
 function GetEvents(infos, minEvents, maxEvents, events=[]) {
-    var url = "https://localhost:5001/Backend/event.php";
+    var url = "https://localhost:8080/Backend/event.php";
     var data = {
         events: events,
         infos: infos,
