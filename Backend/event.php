@@ -1,8 +1,8 @@
 <?php
 
-// Fonction pour récupérer la liste des concours
+require_once('./Database/configdb.php');
+
 function getEventList($infos) {
-    // Connexion à la base de données
     $connexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
     // Vérification de la connexion
