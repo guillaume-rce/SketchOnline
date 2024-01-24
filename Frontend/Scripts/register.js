@@ -1,5 +1,5 @@
 function OnRegisterClick() {
-    var username = document.getElementById("username").value;
+    var username = document.getElementById("pseudo").value;
     var name = document.getElementById("name").value;
     var firstname = document.getElementById("firstname").value;
     var email = document.getElementById("email").value;
@@ -11,13 +11,12 @@ function OnRegisterClick() {
 
 function OnRegisterSuccess() {
     // Redirect to the home page
-    window.location.href = "Frontend/HTML/index.html";
+    window.location.href = "./index.html";
 }
 
 function OnRegisterError(error) {
     alert(error);
 }
-
 
 // Class: Register
 function Register(username, name, firstname, email, password) {
@@ -40,8 +39,10 @@ function Register(username, name, firstname, email, password) {
             type: "POST",
             data: JSON.stringify(data),
             contentType: "application/json",
-            success: OnRegisterSuccess(),
-            error: OnRegisterError("Invalid username or password")
+            success: OnRegisterSuccess,
+            error: function(xhr, status, error) {
+                OnRegisterError("Error: " + error);
+            }
         });
     }
 }

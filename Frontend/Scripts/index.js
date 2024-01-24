@@ -13,7 +13,12 @@ function getCookie(name) {
 }
 
 function GetProfileInfos() {
-    data = {
+        
+    if (typeof token === 'undefined') {
+        console.error("Le token n'est pas défini.");
+        return;
+    }
+    var data = {
         token: token,
         infos: ['photo', 'rank']
     };

@@ -41,6 +41,12 @@
   --dl-color-rank-competitor: #A9A9A9;
   --dl-color-rank-evaluator: #DAA520;
   --dl-color-rank-user: #D500FF;
+
+  /* Status Colors */
+  --dl-color-status-notstarted: #f1948a;
+  --dl-color-status-inprogress: #7fb3d5;
+  --dl-color-status-waitingresults: #ceba6a;
+  --dl-color-status-evaluated: #81ac6d;
 }
 .button {
   color: var(--dl-color-gray-black);

@@ -1,7 +1,7 @@
 -- Création de la base de données
 CREATE DATABASE IF NOT EXISTS SketchBd;
 -- Utilisation de la base de données
-USE SketchBd;
+USE ;
 
 -- Suppression des tables si elles existent déjà
 DROP TABLE IF EXISTS Jury;
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS Club;
 
 -- Table des clubs
 CREATE TABLE Club (
-    numClub INT PRIMARY KEY,
+    numClub INT PRIMARY KEY AUTO_INCREMENT,
     nomClub VARCHAR(255),
     adresse VARCHAR(255),
     numTelephone VARCHAR(20),
@@ -44,18 +44,13 @@ CREATE TABLE Competiteur (
 CREATE TABLE Concours (
     numConcours INT,
     numPres INT,
+    titre VARCHAR(255),
     theme VARCHAR(255),
+    affiche VARCHAR(255),
     dateDebut DATE,
     dateFin DATE,
     etat ENUM('pas commencé', 'en cours', 'attente', 'résultats', 'évalué'),
     PRIMARY KEY(numConcours)
-);
-
--- Table des évaluateurs
-CREATE TABLE Evaluateur (
-    numEvaluateur INT,
-    specialite VARCHAR(255),
-    PRIMARY KEY (numEvaluateur)
 );
 
 -- Table des utilisateurs
@@ -65,8 +60,10 @@ CREATE TABLE Utilisateurs (
     pseudo VARCHAR(255),
     nom VARCHAR(255),
     prenom VARCHAR(255),
-    adresse VARCHAR(255),c
-    login VARCHAR(255),
+    adresse VARCHAR(255),
+    photo VARCHAR(255),
+    email VARCHAR(255),
+    poste VARCHAR(255),
     password VARCHAR(255),
     FOREIGN KEY (numClub) REFERENCES Club(numClub)
 );
@@ -94,7 +91,7 @@ CREATE TABLE President (
 
 -- Table des dessins
 CREATE TABLE Dessin (
-    numDessin INT,
+    numDessin INT AUTO_INCREMENT,
     numCompetiteur INT,
     numConcours INT,
     numEvaluateur INT,
@@ -110,8 +107,7 @@ CREATE TABLE Dessin (
 
 -- Table des évaluations
 CREATE TABLE Evaluation (
-    numEval INT,
-    numEvaluateur INT,
+    numEvaluateur INT ,
     numDessin INT,
     dateEvaluation DATE,
     note INT,
@@ -121,9 +117,16 @@ CREATE TABLE Evaluation (
     FOREIGN KEY (numDessin) REFERENCES Dessin(numDessin)
 );
 
+-- Table des évaluateurs
+CREATE TABLE Evaluateur (
+    numEvaluateur INT,
+    specialite VARCHAR(255),
+    PRIMARY KEY (numEvaluateur)
+);
+
 -- Table associant un club à son directeur
 CREATE TABLE Dirige (
-    numClub INT,
+    numClub INT ,
     numDirecteur INT,
     PRIMARY KEY (numClub, numDirecteur),
     FOREIGN KEY (numClub) REFERENCES Club(numClub),
@@ -132,7 +135,7 @@ CREATE TABLE Dirige (
 
 -- Table associant un concours à un compétiteur
 CREATE TABLE ParticipeComp (
-    numConcours INT,
+    numConcours INT ,
     numCompetiteur INT,
     PRIMARY KEY (numConcours, numCompetiteur),
     FOREIGN KEY (numConcours) REFERENCES Concours(numConcours),
