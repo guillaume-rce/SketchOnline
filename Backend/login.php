@@ -9,8 +9,6 @@ session_start();
 
 // Inclure le fichier de configuration de la base de données
 require_once('./Database/configdb.php');
-
-// Tableau pour stocker la réponse JSON
 $response = array();
 
 // Vérifier si la requête est une requête POST
