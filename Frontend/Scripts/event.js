@@ -1,3 +1,7 @@
+GetEvents(["numConcours", "titre", "theme", "affiche", "etat"], 0, 10);
+
+
+
 function OnGetEventsSuccess(data) {
     // data = {
     //     events: [
@@ -27,11 +31,13 @@ function OnGetEventsError(jqXHR, textStatus, errorThrown) {
     alert(errorMessage);
 }
 
-function GetEvents() {
+function GetEvents(infos, minEvents, maxEvents, events=[]) {
     var url = "https://localhost:5001/Backend/event.php";
     var data = {
-        events: [],
-        infos: ["id", "title", "theme", "image", "status"]
+        events: events,
+        infos: infos,
+        minEvents: minEvents,
+        maxEvents: maxEvents
     }
 
     $.ajax({
@@ -64,6 +70,10 @@ function AddEvent(event) {
     // Create the post
     var eventPost = document.createElement('div');
     eventPost.classList.add('event-post');
+
+    // Change the background color of the post depending on the status
+    var statusColor = GetStatusColor(event.status);
+    eventPost.style.backgroundColor = `var(${statusColor})`;
 
     // Create the id text
     var eventText16 = document.createElement('span');
@@ -105,6 +115,19 @@ function AddEvent(event) {
     eventsContainer.appendChild(eventPost);
 }
 
+function GetStatusColor(status) {
+    switch (status) {
+        case 'evalue':
+            return '--dl-color-status-evaluated';
+        case 'en attente':
+            return '--dl-color-status-watingresults';
+        case 'en cours':
+            return '--dl-color-status-inprogress';
+        default:
+            return '--dl-color-status-notstarted';
+    }
+}
+
 
 /*
 <div class="event-post">
@@ -124,4 +147,19 @@ function AddEvent(event) {
     </h1>
     <span>Theme du concours</span>
 </div>
+
+
+.event-post {
+  gap: var(--dl-space-space-halfunit);
+  flex: 0 0 auto;
+  display: flex;
+  padding: var(--dl-space-space-unit);
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  align-items: flex-start;
+  border-color: #2E4053;
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+  flex-direction: column;
+  background-color: var(--dl-color-gray-white);
+}
 */
