@@ -205,7 +205,7 @@
   justify-content: center;
 }
 .evaluator-textinput {
-  width: 54px;
+  width: auto;
   height: 100%;
   padding-top: 6px;
   padding-left: var(--dl-space-space-halfunit);

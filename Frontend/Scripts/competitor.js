@@ -3,7 +3,7 @@ loadContest();
 function loadContest() {
     infos = ["numConcours", "titre"];
     
-    // Get the contest id from the URL
+    // TODO: Get the contest id from the URL
 }
 
 function OnEventsSuccess(data) {
