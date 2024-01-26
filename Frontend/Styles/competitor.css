@@ -49,6 +49,9 @@
   margin-left: var(--dl-space-space-twounits);
   text-decoration: none;
 }
+.competitor-select {
+  width: auto;
+}
 .competitor-text06 {
   margin-left: var(--dl-space-space-twounits);
 }

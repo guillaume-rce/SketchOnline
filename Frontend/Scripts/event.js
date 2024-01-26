@@ -1,7 +1,7 @@
 // Verify if the page is loaded
 $(document).ready(function() {
     // Get the events
-    GetEvents(["numConcours", "titre", "theme", "affiche", "etat"], 0, 10);
+    GetEvents( "theme", "affiche", "etat"], 0, 10);
 });
 
 
