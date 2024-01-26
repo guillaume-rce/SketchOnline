@@ -1,21 +1,36 @@
 <?php
 
+// Définir les en-têtes CORS (Cross-Origin Resource Sharing) pour autoriser les requêtes depuis n'importe quelle origine
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
+
 // Fonction pour récupérer des informations de connexion à partir d'un token
-function getConnexionInfoByToken($token) {
+function getConnexionInfoByToken($email, $data) {
     $connexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
     if ($connexion->connect_error) {
         die("Échec de la connexion à la base de données : " . $connexion->connect_error);
     }
-    
-    $requete = $connexion->prepare("SELECT numUtilisateur, prenom, adresse, photo, numClub, email FROM Utilisateurs JOIN Club ON Utilisateurs.numClub = Club.numClub WHERE Utilisateurs.token = ?");
-    $requete->bind_param("s", $token);
+
+    $query = "SELECT ";
+    if (empty($data)) {
+        $query .= "* ";
+    } else {
+        $query .= implode(", ", $data);
+    }
+    $query .= "FROM Utilisateurs WHERE email = ?";
+    $requete = $connexion->prepare($query);
+    if ($requete === FALSE) {
+        die("Erreur lors de la préparation de la requête : " . $connexion->error);
+    }
+    $requete->bind_param("s", $email);
     $requete->execute();
     $requete->bind_result($numUtilisateur, $prenom, $adresse, $photo, $numClub, $email);
     $requete->fetch();
     $requete->close();
     $connexion->close();
 
-    $rank= getRank($numUtilisateur);
+    $rank = getRank($numUtilisateur);
     return [
         'numUtilisateur' => $numUtilisateur,
         'prenom' => $prenom,
@@ -23,31 +38,27 @@ function getConnexionInfoByToken($token) {
         'photo' => $photo,
         'numClub' => $numClub,
         'email' => $email,
-        $rank 
+        'rank' => $rank
     ];
 }
 
-// Fonction pour récupérer le poste (rank) d'un utilisateur
 function getRank($userId) {
-    // Établir une connexion à la base de données
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
     // Vérifier la connexion à la base de données
     if ($mysqli->connect_error) {
         die("La connexion à la base de données a échoué : " . $mysqli->connect_error);
     }
-
-    // Initialiser le poste à vide
-    $rank = 'Utilisateur';
+    $rank = 'user';
 
     // Requête SQL pour récupérer le poste d'un utilisateur
     $query = "SELECT * FROM Utilisateurs 
-              INNER JOIN President ON Utilisateurs.numUtilisateur = President.numPres
-              INNER JOIN Directeur ON Utilisateurs.numUtilisateur = Directeur.numDirecteur
-              INNER JOIN Administrateur ON Utilisateurs.numUtilisateur = Administrateur.numAdmin
+              LEFT JOIN Président ON Utilisateurs.numUtilisateur = Président.numPres
+              LEFT JOIN Directeur ON Utilisateurs.numUtilisateur = Directeur.numDirecteur
+              LEFT JOIN Competiteur ON Utilisateurs.numUtilisateur = Competiteur.numCompetiteur
+              LEFT JOIN Administrateur ON Utilisateurs.numUtilisateur = Administrateur.numAdmin
               WHERE Utilisateurs.numUtilisateur = ?";
 
-    // Préparer la requête SQL
     $stmt = $mysqli->prepare($query);
 
     // Vérifier si la préparation de la requête a réussi
@@ -67,9 +78,9 @@ function getRank($userId) {
             if (!empty($row['numPres'])) {
                 $rank = 'President';
             } elseif (!empty($row['numDirecteur'])) {
-                $rank = 'Directeur';
+                $rank = 'Director';
             } elseif (!empty($row['numAdmin'])) {
-                $rank = 'Administrateur';
+                $rank = 'admin';
             }
         }
     } else {
@@ -82,21 +93,27 @@ function getRank($userId) {
     return $rank;
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
-if (isset($data['token'])) {
-    $token = $data['token'];
-    $profileInfo = getConnexionInfoByToken($token);
+$response = array(); // Initialiser le tableau de réponse
 
-    if(empty($data['infos'])){
-        echo json_encode($profileInfo);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $data = json_decode(file_get_contents("php://input"));
+    $token = $data->token;
+
+    if (empty($token)) {
+        $response['error'] = "Veuillez fournir un token";
+    } elseif ($_SESSION['token'] != $token) {
+        $response['error'] = "Token invalide ou expiré";
+    } else {
+        $email = $_SESSION['email'];
+        $result = getConnexionInfoByToken($email, $data);
+        echo json_encode($result);
+        // renvoyer les infos de l'utilisateur
     }
-    else
-    {
-        $pagesInfo = $profileInfo['poste', $rank] ;
-    } 
-   
 } else {
-    echo json_encode(['error' => 'Token non fourni']);
+    $response['error'] = "Méthode non autorisée";
 }
+
+header('Content-Type: application/json');
+echo json_encode($response);
 
 ?>

@@ -6,7 +6,8 @@ header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
 
 session_start();
 
-require_once('./Database/configdb.php');
+
+require_once('../configdb.php');
 
 $response = array();
 
@@ -18,8 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $email = $data->email;
         $password = $data->password;
+        $_SESSION['email'] = $email;
         
-        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
         if ($mysqli->connect_error) {
             $response['error'] = "La connexion à la base de données a échoué : " . $mysqli->connect_error;
         } else {
@@ -39,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if ($password === $user['password']) {
                             $token = password_hash(time(), PASSWORD_DEFAULT);
+                            $_SESSION['token'] = $token;
                             $response['token'] = $token;
                         } else {
                             error_log("Mot de passe incorrect. Données reçues : " . json_encode($data));
