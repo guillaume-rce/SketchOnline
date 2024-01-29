@@ -1,6 +1,6 @@
 <?php
 function getRole($userID, $connexion) {
-
+    $role = "user";
     $queryRole = "SELECT U.numUtilisateur,
     CASE
         WHEN E.numEvaluateur IS NOT NULL THEN 'Evaluateur'
@@ -23,8 +23,9 @@ function getRole($userID, $connexion) {
     $stmt->execute();
     $result = $stmt->get_result();
     $stmt->close();
-
-    $role = $result->fetch_assoc();
+    if ($result->num_rows > 0){
+        $role = $result->fetch_assoc();
+    }
     return $role['Role'];
 }
 ?>

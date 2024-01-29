@@ -41,8 +41,8 @@ function GetEvents() {
         console.log(response.status);
         response.status === 'success' ? OnGetEventsSuccess(response) : OnGetEventsError(response);
     })
-    .catch(() => {
-        console.error('Une erreur s\'est produite');
+    .catch((error) => {
+        console.error(error);
     });
     
 }
