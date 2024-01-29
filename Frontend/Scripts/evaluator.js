@@ -11,7 +11,6 @@ evaluations = [
 */
 
 function getEvaluations() {
-    // TODO: get evaluations from backend
     // evaluations = [
     //     {
     //         contestName: "Concours 1",
@@ -19,6 +18,13 @@ function getEvaluations() {
     //     },
     //     ...
     // }
+
+    $.ajax({
+        url: "/Backend/evaluator.php",
+        type: "GET",
+        success: onEvaluationsReceived,
+        error: onErrorsReceived
+    });
 }
 
 function onEvaluationsReceived(data) {
@@ -33,8 +39,8 @@ function onEvaluationsReceived(data) {
     displayEvaluations();
 }
 
-function onErrorsReceived() {
-    // TODO: display error message
+function onErrorsReceived(data) {
+    console.log(data);
 }
 
 function displayEvaluations() {
@@ -107,5 +113,19 @@ function sendEvaluation(id) {
     var note = document.getElementById("note" + id).value;
     var commentaire = document.getElementById("commentaire" + id).value;
 
-    // TODO: send evaluation to backend
+    $.ajax({
+        url: "/Backend/evaluator.php",
+        type: "POST",
+        data: {
+            id: id,
+            note: note,
+            commentaire: commentaire
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 }

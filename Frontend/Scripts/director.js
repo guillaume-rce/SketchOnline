@@ -10,7 +10,6 @@ loadCompetitors();
 drawCompetitors();
 
 function loadEvaluators() {
-    // TODO: load evaluators from database
     /*
     evaluatorsId = [
         {
@@ -20,10 +19,19 @@ function loadEvaluators() {
         ...
     ]
     */
+    $.ajax({
+        url: "/Backend/evaluatorsGetter.php",
+        type: "GET",
+        success: function (data) {
+            evaluatorsId = data;
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 }
 
 function loadCompetitors() {
-    // TODO: load competitors from database
     /*
     competitorsId = [
         {
@@ -33,6 +41,16 @@ function loadCompetitors() {
         ...
     ]
     */
+    $.ajax({
+        url: "/Backend/competitorsGetter.php",
+        type: "GET",
+        success: function (data) {
+            competitorsId = data;
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 }
 
 function drawEvaluators() {

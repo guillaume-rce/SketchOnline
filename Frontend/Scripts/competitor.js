@@ -3,7 +3,16 @@ loadContest();
 function loadContest() {
     infos = ["numConcours", "titre"];
     
-    // TODO: Get the contest id from the URL
+    $.ajax({
+        url: "/Backend/contestGetter.php",
+        type: "GET",
+        success: function (data) {
+            infos = data;
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 }
 
 function OnEventsSuccess(data) {
@@ -54,6 +63,17 @@ function Submission(contestId, file, comment) {
 
     this.submit = function () {
         var formData = JSON.stringify(this);
-        // TODO: Send data to the server
+        
+        $.ajax({
+            type: "POST",
+            url: "/Backend/competitor.php",
+            data: formData,
+            success: function (data) {
+                alert("Votre soumission a été enregistrée.");
+            },
+            error: function (data) {
+                alert("Erreur lors de l'enregistrement de votre soumission.");
+            }
+        });
     }
 }

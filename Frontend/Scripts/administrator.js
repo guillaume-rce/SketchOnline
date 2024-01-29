@@ -29,6 +29,17 @@ function Contest(name, image, startDate, endDate, theme,
     this.submit = function()
     {
         var data = JSON.stringify(this);
-        // TODO: Send data to the server
+        
+        $.ajax({
+            url: "/Backend/administrator.php",
+            type: "POST",
+            data: data,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
     }
 }
