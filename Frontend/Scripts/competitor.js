@@ -1,3 +1,5 @@
+import Api from '../../service/api.js';
+
 loadContest();
 
 function loadContest() {

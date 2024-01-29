@@ -1,3 +1,5 @@
+import Api from '../service/api.js';
+
 function OnSubmit()
 {
     var name = document.getElementById("name").value;

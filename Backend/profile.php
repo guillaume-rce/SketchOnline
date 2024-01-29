@@ -1,17 +1,7 @@
 <?php
 
-// Définir les en-têtes CORS (Cross-Origin Resource Sharing) pour autoriser les requêtes depuis n'importe quelle origine
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
-
 // Fonction pour récupérer des informations de connexion à partir d'un token
 function getConnexionInfoByToken($email, $data) {
-    $connexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-    if ($connexion->connect_error) {
-        die("Échec de la connexion à la base de données : " . $connexion->connect_error);
-    }
-
     $query = "SELECT ";
     if (empty($data)) {
         $query .= "* ";

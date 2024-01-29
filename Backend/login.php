@@ -1,13 +1,8 @@
 <?php
-// Définir les en-têtes CORS (Cross-Origin Resource Sharing) pour autoriser les requêtes depuis n'importe quelle origine
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
-
+require_once('./role.php');
 session_start();
 
-
-require_once('../configdb.php');
+require_once('./configdb.php');
 
 $response = array();
 
@@ -20,16 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $data->email;
         $password = $data->password;
         $_SESSION['email'] = $email;
-        
-        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-        if ($mysqli->connect_error) {
-            $response['error'] = "La connexion à la base de données a échoué : " . $mysqli->connect_error;
+
+        $connexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+        if ($connexion->connect_error) {
+            $response['error'] = "La connexion à la base de données a échoué : " . $connexion->connect_error;
         } else {
-            $query = "SELECT * FROM Utilisateurs WHERE email = ?";
-            $stmt = $mysqli->prepare($query);
+            $stmt = $connexion->prepare("SELECT * FROM Utilisateurs WHERE email = ?");
 
             if ($stmt === FALSE) {
-                $response['error'] = "Erreur lors de la préparation de la requête : " . $mysqli->error;
+                $response['error'] = "Erreur lors de la préparation de la requête : " . $connexion->error;
             } else {
                 $stmt->bind_param("s", $email);
 
@@ -40,9 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $user = $result->fetch_assoc();
 
                         if ($password === $user['password']) {
-                            $token = password_hash(time(), PASSWORD_DEFAULT);
-                            $_SESSION['token'] = $token;
-                            $response['token'] = $token;
+                            // Utilisation d'une fonction définie précédemment
+                            
+                            echo json_encode(array(
+                                'status' => 'success',
+                                'id' => $user['numUtilisateur'],
+                                'login' => $user['login'],
+                                'name' => $user['nom'],
+                                'surname' => $user['prenom'],
+                                'email' => $user['email'],
+                                ));
+                                
                         } else {
                             error_log("Mot de passe incorrect. Données reçues : " . json_encode($data));
                             $response['error'] = "Mot de passe incorrect";
@@ -57,11 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->close();
             }
 
-            $mysqli->close();
+            $connexion->close();
         }
     }
 }
 
 header('Content-Type: application/json');
-echo json_encode($response);
 ?>
