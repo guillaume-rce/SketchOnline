@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
             login: response.login,
             name: response.name,
             surname: response.surname,
-            role: response.role
+            role: response.role,
+            email: response.email,
         };
         localStorage.clear();
         localStorage.setItem('userData', JSON.stringify(userData));
 
-        window.location.href = '/SketchOline/Frontend/Pages/indexlog.html';
+        window.location.href = '/SketchOnline/Frontend/Pages/indexlog.html';
         alert('Vous êtes connecté en tant que : ' + response.role);
     };
 
