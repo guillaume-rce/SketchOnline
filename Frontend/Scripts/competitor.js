@@ -1,18 +1,26 @@
-loadContest();
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the user is connected
+    if (localStorage.getItem('userData') !== null) {
+        loadContest();
+    }
+});
 
-function loadContest() {
-    infos = ["numConcours", "titre"];
-    
-    $.ajax({
-        url: "/Backend/contestGetter.php",
-        type: "GET",
-        success: function (data) {
-            infos = data;
-        },
-        error: function (data) {
-            console.log(data);
-        }
-    });
+function loadContest() {    
+    var fuck = localStorage.getItem('userData');    
+    var tamere = JSON.parse(fuck).email;
+
+    data = {
+        email: tamere
+    };
+
+    ApiGet.request("/SketchOnline/Backend/competitions.php", "GET", data)
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function OnEventsSuccess(data) {
@@ -39,17 +47,13 @@ function OnEventsSuccess(data) {
     }
 }
 
-function OnEventsError(jqXHR, textStatus, errorThrown) {
-    var errorMessage = "Erreur AJAX lors de la connexion : " + textStatus;
-    if (errorThrown) {
-        errorMessage += "\n" + errorThrown;
-    }
-    alert(errorMessage);
+function OnEventsError(error) {
+    console.log(error);
 }
 
 function onSubmit() {
     var contestId = document.getElementById("contest").value;
-    var file = document.getElementById("file").value;
+    var file = document.getElementById("file").files[0];
     var comment = document.getElementById("comment").value;
 
     var submission = new Submission(contestId, file, comment);
@@ -63,17 +67,33 @@ function Submission(contestId, file, comment) {
 
     this.submit = function () {
         var formData = JSON.stringify(this);
+
+        console.log(formData);
+        /*
+        formData = {
+            contestId: 'xxxx',
+            file: 'xxxx',
+            comment: 'xxxx'
+        };
+        */
         
-        $.ajax({
-            type: "POST",
-            url: "/Backend/competitor.php",
-            data: formData,
-            success: function (data) {
-                alert("Votre soumission a été enregistrée.");
-            },
-            error: function (data) {
-                alert("Erreur lors de l'enregistrement de votre soumission.");
-            }
-        });
+        /*
+        Api.request('/SketchOnline/Backend/submission.php', 'POST', formData)
+            .then(response => {
+                console.log(response.status);
+                response.status === 'success' ? this.OnSubmitSuccess(response) : this.OnSubmitError(response);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            */
+    }
+
+    this.OnSubmitSuccess = function (data) {
+        console.log(data);
+    }
+
+    this.OnSubmitError = function (error) {
+        console.log(error);
     }
 }

@@ -2,28 +2,44 @@ var evaluations = [];
 /*
 evaluations = [
     {
-        id: 1,
         contestName: "Concours 1",
         image: "",
+        numDessin: xx
     },
     ...
 ]
 */
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the user is connected
+    if (localStorage.getItem('userData') !== null) {
+        getEvaluations();
+    }
+});
 
 function getEvaluations() {
     // evaluations = [
     //     {
     //         contestName: "Concours 1",
     //         image: "",
+    //         numDessin: xx
     //     },
     //     ...
     // }
+    var fuck = localStorage.getItem('userData');    
+    var tamere = JSON.parse(fuck).email;
 
-    $.ajax({
-        url: "/Backend/evaluator.php",
-        type: "GET",
-        success: onEvaluationsReceived,
-        error: onErrorsReceived
+    data = {
+        email: tamere,
+    };
+
+    ApiGet.request("/SketchOnline/Backend/evaluations.php", "GET", data)
+    .then(response => {
+        console.log(response.status);
+        response.status === 'success' ? onEvaluationsReceived(response) : onErrorsReceived(response);
+    })
+    .catch((error) => {
+        console.error(error);
     });
 }
 
@@ -31,9 +47,9 @@ function onEvaluationsReceived(data) {
     for (var i = 0; i < data.length; i++) {
         var evaluation = data[i];
         evaluations.push({
-            id: i,
             contestName: evaluation.contestName,
-            image: evaluation.image
+            image: evaluation.image,
+            numDessin: evaluation.numDessin,
         });
     }
     displayEvaluations();
@@ -46,7 +62,7 @@ function onErrorsReceived(data) {
 function displayEvaluations() {
     for (var i = 0; i < evaluations.length; i++) {
         var evaluation = evaluations[i];
-        createEvaluation(evaluation.contestName, evaluation.image, evaluation.id);
+        createEvaluation(evaluation.contestName, evaluation.image, evaluation.numDessin);
     }
 }
 
@@ -86,7 +102,7 @@ function createEvaluation(contestName, image, id) {
     span3.innerHTML = "Commentaire :";
     var textarea = document.createElement("textarea");
     textarea.placeholder = "commentaire";
-    textarea.id = "commentaire" + id;
+    textarea.id = "commentaire" + id; // id = "numDessin"
     textarea.className = "textarea";
     container5.appendChild(span3);
     container5.appendChild(textarea);
@@ -113,19 +129,9 @@ function sendEvaluation(id) {
     var note = document.getElementById("note" + id).value;
     var commentaire = document.getElementById("commentaire" + id).value;
 
-    $.ajax({
-        url: "/Backend/evaluator.php",
-        type: "POST",
-        data: {
-            id: id,
-            note: note,
-            commentaire: commentaire
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (data) {
-            console.log(data);
-        }
+    Api.request("/SketchOnline/Backend/evaluate.php", "POST", {
+        note: note,
+        commentaire: commentaire,
+        numDessin: id
     });
 }
