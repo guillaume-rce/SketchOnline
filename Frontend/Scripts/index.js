@@ -19,8 +19,13 @@ function GetProfileInfos() {
     } else {
         console.log('No user data found');
     }
+
+    data = {
+        email: email,
+        infos: ['photo', 'rank']
+    };
     
-    Api.request('/SketchOnline/Backend/profile.php', 'post', userData)
+    Api.request('/SketchOnline/Backend/profile.php', 'post', data)
                 .then(response => {
                     console.log(response.status);
                     response.status === 'success' ? OnProfileInfosSuccess(response) : OnProfileInfosError(response);
