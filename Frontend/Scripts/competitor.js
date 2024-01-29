@@ -56,44 +56,27 @@ function onSubmit() {
     var file = document.getElementById("file").files[0];
     var comment = document.getElementById("comment").value;
 
-    var submission = new Submission(contestId, file, comment);
-    submission.submit();
+    var submissionData = new FormData();
+    submissionData.append("contestId", contestId);
+    submissionData.append("file", file);
+    submissionData.append("comment", comment);
+
+    Api.request("/SketchOnline/Backend/submit.php", "POST", submissionData)
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnSubmitSuccess(response) : OnSubmitError(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
-function Submission(contestId, file, comment) {
-    this.contestId = contestId;
-    this.file = file;
-    this.comment = comment;
+function OnSubmitSuccess(data) {
+    console.log(data);
+    alert("Votre dessin a bien été envoyé !");
+}
 
-    this.submit = function () {
-        var formData = JSON.stringify(this);
-
-        console.log(formData);
-        /*
-        formData = {
-            contestId: 'xxxx',
-            file: 'xxxx',
-            comment: 'xxxx'
-        };
-        */
-        
-        /*
-        Api.request('/SketchOnline/Backend/submission.php', 'POST', formData)
-            .then(response => {
-                console.log(response.status);
-                response.status === 'success' ? this.OnSubmitSuccess(response) : this.OnSubmitError(response);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-            */
-    }
-
-    this.OnSubmitSuccess = function (data) {
-        console.log(data);
-    }
-
-    this.OnSubmitError = function (error) {
-        console.log(error);
-    }
+function OnSubmitError(error) {
+    console.log(error);
+    alert("Une erreur est survenue lors de l'envoi de votre dessin !");
 }
