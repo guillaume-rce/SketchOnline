@@ -1,33 +1,25 @@
-const token = getCookie('token');
-
-if (token) {
-    console.log('User is logged in');
-    GetProfileInfos();
-} else {
-    console.log('User is not logged in');
-function GetProfileInfos() {
-        
-    if (typeof token === 'undefined') {
-        console.error("Le token n'est pas défini.");
-        return;
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the user is connected
+    if (localStorage.getItem('userData') !== null) {
+        // Get the profile infos
+        GetProfileInfos();
     }
+});
+
+function GetProfileInfos() {
     var data = {
-        token: token,
+        email: localStorage.getItem('userData').email,
         infos: ['photo', 'rank']
     };
-
-    $.ajax({
-        url: "http://localhost:8080/Backend/profile.php",
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function(data) {
-            OnProfileInfosSuccess(data);
-        },
-        error: function(error) {
-            OnProfileInfosError(error);
-        }
-    });
+    
+    Api.request('/SketchOnline/Backend/profile.php', 'post', data)
+                .then(response => {
+                    console.log(response.status);
+                    response.status === 'success' ? OnProfileInfosSuccess(response) : OnProfileInfosError(response);
+                })
+                .catch(() => {
+                    console.error('Une erreur s\'est produite');
+                });
 }
 
 function OnProfileInfosSuccess(data) {
@@ -45,7 +37,8 @@ function OnProfileInfosSuccess(data) {
 
     // Create the home-profile-image element
     var homeProfileImage = document.createElement('img');
-    homeProfileImage.src = data.photo;
+    var photo = data.photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
+    homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
 

@@ -1,12 +1,12 @@
 <?php
 
 // Fonction pour récupérer des informations de connexion à partir d'un token
-function getConnexionInfoByToken($email, $data) {
+function getConnexionInfoByEmail($email, $data) {
     $query = "SELECT ";
     if (empty($data)) {
         $query .= "* ";
     } else {
-        $query .= implode(", ", $data);
+        $query .= implode(", ", $data->infos);
     }
     $query .= "FROM Utilisateurs WHERE email = ?";
     $requete = $connexion->prepare($query);
@@ -87,15 +87,13 @@ $response = array(); // Initialiser le tableau de réponse
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"));
-    $token = $data->token;
+    $email = $data->email;
 
-    if (empty($token)) {
-        $response['error'] = "Veuillez fournir un token";
-    } elseif ($_SESSION['token'] != $token) {
-        $response['error'] = "Token invalide ou expiré";
+    if (empty($email)) {
+        $response['error'] = "Veuillez fournir votre email.";
     } else {
         $email = $_SESSION['email'];
-        $result = getConnexionInfoByToken($email, $data);
+        $result = getConnexionInfoByEmail($email, $data);
         echo json_encode($result);
         // renvoyer les infos de l'utilisateur
     }
