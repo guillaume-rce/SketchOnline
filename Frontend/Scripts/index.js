@@ -7,11 +7,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function GetProfileInfos() {
-    var email = JSON.parse(localStorage.getItem('userData')).email;
-    var data = {
-        email: email,
-        infos: ['photo', 'rank']
-    };
+    let userData = localStorage.getItem('userData');
+    if (userData && userData !== '') {
+        try {
+            userData = JSON.parse(userData);
+            let email = userData.email;
+            console.log(email);
+        } catch (e) {
+            console.error('Invalid JSON:', e);
+        }
+    } else {
+        console.log('No user data found');
+    }
     
     Api.request('/SketchOnline/Backend/profile.php', 'post', data)
                 .then(response => {
