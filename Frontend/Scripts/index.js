@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function GetProfileInfos() {
     var data = {
-        email: localStorage.getItem('userData').email,
+        email: JSON.parse(localStorage.getItem('userData')).email,
         infos: ['photo', 'rank']
     };
     
