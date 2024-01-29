@@ -1,5 +1,6 @@
 <?php
 
+require_once 'role.php';
 // Fonction pour récupérer des informations de connexion à partir d'un token
 function getConnexionInfoByEmail($email, $data) {
     $query = "SELECT ";
@@ -20,7 +21,7 @@ function getConnexionInfoByEmail($email, $data) {
     $requete->close();
     $connexion->close();
 
-    $rank = getRank($numUtilisateur);
+    $rank = getRole($numUtilisateur, $connexion);
     return [
         'numUtilisateur' => $numUtilisateur,
         'prenom' => $prenom,
@@ -32,6 +33,7 @@ function getConnexionInfoByEmail($email, $data) {
     ];
 }
 
+/*
 function getRank($userId) {
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
 
@@ -82,6 +84,7 @@ function getRank($userId) {
 
     return $rank;
 }
+*/
 
 $response = array(); // Initialiser le tableau de réponse
 
