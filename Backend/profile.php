@@ -92,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($email)) {
         $response['error'] = "Veuillez fournir votre email.";
     } else {
-        $email = $_SESSION['email'];
         $result = getConnexionInfoByEmail($email, $data);
         echo json_encode($result);
         // renvoyer les infos de l'utilisateur
