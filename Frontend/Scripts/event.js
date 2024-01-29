@@ -1,6 +1,5 @@
 // Verify if the page is loaded
-$(document).ready(function() {
-    // Get the events
+document.addEventListener('DOMContentLoaded', function () {
     GetEvents();
 });
 
