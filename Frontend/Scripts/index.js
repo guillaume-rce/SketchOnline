@@ -7,22 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function GetProfileInfos() {
-    let userData = localStorage.getItem('userData');
-    if (userData && userData !== '') {
-        try {
-            userData = JSON.parse(userData);
-            let email = userData.email;
-            console.log(email);
-        } catch (e) {
-            console.error('Invalid JSON:', e);
-        }
-    } else {
-        console.log('No user data found');
-    }
+    var fuck = localStorage.getItem('userData');    
+    var tamere = JSON.parse(fuck).email;
 
     data = {
-        email: email,
-        infos: ['photo', 'rank']
+    email: tamere,
+    infos: ['photo', 'rank']
     };
     
     Api.request('/SketchOnline/Backend/profile.php', 'post', data)
