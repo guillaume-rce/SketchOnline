@@ -25,8 +25,8 @@ function GetProfileInfos() {
                     console.log(response.status);
                     response.status === 'success' ? OnProfileInfosSuccess(response) : OnProfileInfosError(response);
                 })
-                .catch(() => {
-                    console.error('Une erreur s\'est produite');
+                .catch((error) => {
+                    console.error(error);
                 });
 }
 
