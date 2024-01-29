@@ -2,6 +2,7 @@
 session_start();
 
 require_once('./configdb.php');
+require_once('./role.php');
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -41,6 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 'name' => $user['nom'],
                                 'surname' => $user['prenom'],
                                 'email' => $user['email'],
+                                'role' => getRole($user['numUtilisateur'], $connexion),
+
                                 ));
                                 error_log($user['numUtilisateur']);
                         } else {
