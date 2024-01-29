@@ -1,9 +1,7 @@
 <?php
-require_once('./role.php');
 session_start();
 
 require_once('./configdb.php');
-
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 'surname' => $user['prenom'],
                                 'email' => $user['email'],
                                 ));
-                                
+                                error_log($user['numUtilisateur']);
                         } else {
                             error_log("Mot de passe incorrect. Données reçues : " . json_encode($data));
                             $response['error'] = "Mot de passe incorrect";

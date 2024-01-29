@@ -1,7 +1,7 @@
 // Verify if the page is loaded
 $(document).ready(function() {
     // Get the events
-    GetEvents( "theme", "affiche", "etat"], 0, 10);
+    GetEvents();
 });
 
 
@@ -34,27 +34,18 @@ function OnGetEventsError(jqXHR, textStatus, errorThrown) {
     alert(errorMessage);
 }
 
-function GetEvents(infos, minEvents, maxEvents, events=[]) {
-    var url = "https://localhost:8080/Backend/event.php";
+function GetEvents() {
     var data = {
-        events: events,
-        infos: infos,
-        minEvents: minEvents,
-        maxEvents: maxEvents
     }
-
-    $.ajax({
-        url: url,
-        type: "GET",
-        data: data,
-        contentType: "application/json",
-        success: function(data) {
-            OnEventsSuccess(data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            OnEventsError(jqXHR, textStatus, errorThrown);
-        }
+    Api.request('/SketchOnline/Backend/event.php', 'GET',data )
+    .then(response => {
+        console.log(response.status);
+        response.status === 'success' ? OnGetEventsSuccess(response) : OnGetEventsError(response);
+    })
+    .catch(() => {
+        console.error('Une erreur s\'est produite');
     });
+    
 }
 
 function AddEvent(event) {
@@ -130,39 +121,3 @@ function GetStatusColor(status) {
             return '--dl-color-status-notstarted';
     }
 }
-
-
-/*
-<div class="event-post">
-    <span class="event-text16">
-        <span>Id unique</span>
-        <br />
-    </span>
-    <img
-        id="image"
-        alt="image"
-        src="https://play.teleporthq.io/static/svg/default-img.svg"
-        class="event-image1"
-    />
-    <h1>
-        <span>Title</span>
-        <br />
-    </h1>
-    <span>Theme du concours</span>
-</div>
-
-
-.event-post {
-  gap: var(--dl-space-space-halfunit);
-  flex: 0 0 auto;
-  display: flex;
-  padding: var(--dl-space-space-unit);
-  box-shadow: 5px 5px 10px 0px #d4d4d4;
-  align-items: flex-start;
-  border-color: #2E4053;
-  border-width: 1px;
-  border-radius: var(--dl-radius-radius-radius8);
-  flex-direction: column;
-  background-color: var(--dl-color-gray-white);
-}
-*/
