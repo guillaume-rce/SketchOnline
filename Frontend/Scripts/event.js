@@ -34,9 +34,8 @@ function OnGetEventsError(jqXHR, textStatus, errorThrown) {
 }
 
 function GetEvents() {
-    var data = {
-    }
-    Api.request('/SketchOnline/Backend/event.php', 'GET',data )
+    // var data = {}
+    Api.request('/SketchOnline/Backend/event.php', 'GET')
     .then(response => {
         console.log(response.status);
         response.status === 'success' ? OnGetEventsSuccess(response) : OnGetEventsError(response);
