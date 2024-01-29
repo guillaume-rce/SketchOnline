@@ -11,8 +11,8 @@ function GetProfileInfos() {
     var tamere = JSON.parse(fuck).email;
 
     data = {
-    email: tamere,
-    infos: ['photo', 'rank']
+        email: tamere,
+        infos: ['photo']
     };
     
     Api.request('/SketchOnline/Backend/profile.php', 'post', data)
