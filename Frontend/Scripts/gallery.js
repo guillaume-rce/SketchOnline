@@ -1,23 +1,11 @@
 // Verify if the page is loaded
-document.addgalleryListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("DOM fully loaded and parsed");
     Getgallerys();
 });
 
-
 function OnGetgallerysSuccess(data) {
-    // data = {
-    //     gallerys: [
-    //         {
-    //             id: 'xxxx',
-    //             title: 'xxxx',
-    //             theme: 'xxxx',
-    //             image: 'xxxx',
-    //             status: 'xxxx'
-    //         },
-    //         ...
-    //     ]
-    // };
-
+    console.log("OnGetgallerysSuccess called with data:", data);
     // Loop through the gallerys
     for (var i = 0; i < data.gallerys.length; i++) {
         // Add the gallery to the gallery list
@@ -26,6 +14,7 @@ function OnGetgallerysSuccess(data) {
 }
 
 function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
+    console.log("OnGetgallerysError called with jqXHR, textStatus, errorThrown:", jqXHR, textStatus, errorThrown);
     var errorMessage = "Erreur AJAX lors de la connexion : " + textStatus;
     if (errorThrown) {
         errorMessage += "\n" + errorThrown;
@@ -34,88 +23,69 @@ function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
 }
 
 function Getgallerys() {
-    // var data = {}
+    console.log("Getgallerys called");
     ApiGet.request('/SketchOnline/Backend/gallery.php', 'GET')
-    .then(response => {
-        console.log(response.status);
-        response.status === 'success' ? OnGetgallerysSuccess(response) : OnGetgallerysError(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-    
+        .then(response => {
+            console.log("ApiGet.request then called with response:", response);
+            console.log(response.status);
+            response.status === 'success' ? OnGetgallerysSuccess(response) : OnGetgallerysError(response);
+        })
+        .catch((error) => {
+            console.log("ApiGet.request catch called with error:", error);
+            console.error(error);
+        });
 }
 
 function Addgallery(gallery) {
-    /*
-    gallery = {
-        numDessin: 'xxxx',
-        titre: 'xxxx',
-        thème: 'xxxx',
-        affiche: 'xxxx',
-        etat: 'xxxx'
-    };
-    */
-    
-    // The goal is to add an gallery (exemple above) to the gallery list (div with id="gallerys-container")
-
+    console.log("Addgallery called with gallery:", gallery);
     // Create the post
     var galleryPost = document.createElement('div');
     galleryPost.classList.add('gallery-post');
-
-    // Change the background color of the post depending on the status
-    var statusColor = GetStatusColor(gallery.etat);
-    galleryPost.style.backgroundColor = `var(${statusColor})`;
-
-    // Create the id text
-    var galleryText16 = document.createElement('span');
-    galleryText16.classList.add('gallery-text16');
-
-    var idSpan = document.createElement('span');
-    idSpan.innerHTML = gallery.numConcours;
-    galleryText16.appendChild(idSpan);
-
-    var br = document.createElement('br');
-    galleryText16.appendChild(br);
-
-    galleryPost.appendChild(galleryText16);
 
     // Create the image
     var image = document.createElement('img');
     image.id = 'image';
     image.alt = 'image';
-    image.src = gallery.affiche;
+    image.src = gallery.leDessin; // Assuming 'image' property contains the image URL
     image.classList.add('gallery-image1');
     galleryPost.appendChild(image);
 
     // Create the title
     var title = document.createElement('h1');
     var titleSpan = document.createElement('span');
-    titleSpan.innerHTML = gallery.titre;
+    titleSpan.innerHTML = gallery.commentaire; // Assuming 'title' property contains the title
     title.appendChild(titleSpan);
     var br = document.createElement('br');
     title.appendChild(br);
     galleryPost.appendChild(title);
 
-    // Create the theme
-    var themeSpan = document.createElement('span');
-    themeSpan.innerHTML = gallery.thème;
-    galleryPost.appendChild(themeSpan);
+    // Create the container for number and icon
+    var container = document.createElement('div');
+    container.classList.add('gallery-container3');
+
+    // Create the number span
+    var numberSpan = document.createElement('span');
+    numberSpan.classList.add('gallery-text16');
+    var nbSpan = document.createElement('span');
+    nbSpan.innerHTML = gallery.classement; // Assuming 'nb' property contains the number
+    numberSpan.appendChild(nbSpan);
+    br = document.createElement('br');
+    numberSpan.appendChild(br);
+    container.appendChild(numberSpan);
+
+    // Create the icon
+    var icon = document.createElement('svg');
+    icon.setAttribute('viewBox', '0 0 1024 1024');
+    icon.classList.add('gallery-icon10');
+    var path = document.createElement('path');
+    path.setAttribute('d', 'M755.188 64c-107.63 0-200.258 87.554-243.164 179-42.938-91.444-135.578-179-243.216-179-148.382 0-268.808 120.44-268.808 268.832 0 301.846 304.5 380.994 512.022 679.418 196.154-296.576 511.978-387.206 511.978-679.418 0-148.392-120.43-268.832-268.812-268.832z');
+    icon.appendChild(path);
+    container.appendChild(icon);
+
+    galleryPost.appendChild(container);
 
     // Add the post to the gallery list
-    var gallerysContainer = document.getElementById('gallerys-container');
+    var gallerysContainer = document.querySelector('.gallery-container1');
+    console.log("Adding gallery post to gallerysContainer:", gallerysContainer);
     gallerysContainer.appendChild(galleryPost);
-}
-
-function GetStatusColor(status) {
-    switch (status) {
-        case 'évalué':
-            return '--dl-color-status-evaluated';
-        case 'en attente':
-            return '--dl-color-status-watingresults';
-        case 'en cours':
-            return '--dl-color-status-inprogress';
-        default:
-            return '--dl-color-status-notstarted';
-    }
 }

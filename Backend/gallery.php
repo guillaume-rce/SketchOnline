@@ -23,7 +23,7 @@ while ($row = $result->fetch_assoc()) {
 
 $data = [
     "status" => "success", // Ajouter le champ 'status'
-    "events" => $eventList
+    "gallerys" => $eventList
 ];
 
 // Fermeture de la requête et de la connexion

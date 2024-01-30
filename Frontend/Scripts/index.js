@@ -2,9 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('userData') !== null) {
         // Get the profile infos
         GetProfileInfos();
+
     }
     });
-
+document.getElementById('disconnect').addEventListener('click', function() {
+    localStorage.removeItem('userData');
+    window.location.href = '/SketchOnline/Frontend/Pages/index.html';
+});
 function GetProfileInfos() {
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
@@ -43,6 +47,7 @@ function OnProfileInfosSuccess(data) {
     homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
+    homeProfileImage.onclick = onRedirectToMy;
 
     // Change the color of the home-profile-image border
     homeProfileImage.style.borderColor = GetColorVar(data.rank);
