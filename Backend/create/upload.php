@@ -48,19 +48,19 @@ $uploadOk = 1;
 
 if(isset($_FILES["fileToUpload"]["tmp_name"])) {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo {"status" => "success", 
+        echo json_encode(["status" => "success", 
             "message" => "Le fichier ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " a été téléchargé.",
-            "path" => $target_file};
+            "path" => $target_file]);
 
     } else {
-        echo {"status" => "failure",
+        echo json_encode(["status" => "failure",
             "message" => "Erreur lors du téléchargement du fichier.",
-            "path" => null};
+            "path" => null]);
     }
 } else {
-    echo {"status" => "failure",
+    echo json_encode(["status" => "failure",
         "message" => "Erreur lors du téléchargement du fichier.",
-        "path" => null};
+        "path" => null]);
 }
 
 exit;
