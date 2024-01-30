@@ -22,14 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Exécuter la requête
     $requete = $connexion->prepare("SELECT c.numConcours, c.titre FROM Utilisateurs u JOIN Compétiteur comp ON u.numUtilisateur = comp.numCompetiteur JOIN ParticipeComp pc ON comp.numCompetiteur = pc.numCompetiteur JOIN Concours c ON pc.numConcours = c.numConcours WHERE u.numUtilsateur = ?");
-
-    if (!$requete) {
-        echo json_encode(["status" => "failure", "message" => "Erreur de préparation de la requête"]);
-        $connexion->close();
-        die();
-    }
-
     $requete->bind_param("s", $userId);
+    
     if (!$requete->execute()) {
         echo json_encode(["status" => "failure", "message" => "Erreur d'exécution de la requête"]);
         $requete->close();
