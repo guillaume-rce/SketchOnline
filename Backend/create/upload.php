@@ -16,13 +16,13 @@ $user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
 
 // Handle errors for missing data
 if (!$type_of_upload) {
-    die("Error: 'type_of_upload' is missing.");
+    throw new Exception("Error: 'type_of_upload' is missing.");
 }
 if (!$contest_id) {
-    die("Error: 'contest_id' is missing.");
+    throw new Exception("Error: 'contest_id' is missing.");
 }
 if (!$user_id) {
-    die("Error: 'user_id' is missing.");
+    throw new Exception("Error: 'user_id' is missing.");
 }
 
 switch ($type_of_upload) {
