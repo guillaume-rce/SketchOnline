@@ -4,14 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     Getgallerys();
 });
 
-function OnGetgallerysSuccess(data) {
-    console.log("OnGetgallerysSuccess called with data:", data);
-    // Loop through the gallerys
-    for (var i = 0; i < data.gallerys.length; i++) {
-        // Add the gallery to the gallery list
-        Addgallery(data.gallerys[i]);
-    }
-}
 
 function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
     console.log("OnGetgallerysError called with jqXHR, textStatus, errorThrown:", jqXHR, textStatus, errorThrown);
