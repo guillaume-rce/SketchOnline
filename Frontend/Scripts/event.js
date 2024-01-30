@@ -113,7 +113,7 @@ function GetStatusColor(status) {
         case 'évalué':
             return '--dl-color-status-evaluated';
         case 'en attente':
-            return '--dl-color-status-watingresults';
+            return '--dl-color-status-waitingresults';
         case 'en cours':
             return '--dl-color-status-inprogress';
         default:
