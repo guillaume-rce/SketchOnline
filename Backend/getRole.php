@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     FROM Utilisateurs U
     LEFT JOIN Evaluateur E ON U.numUtilisateur = E.numEvaluateur
     LEFT JOIN Administrateur A ON U.numUtilisateur = A.numAdmin
-    LEFT JOIN Competiteur C ON U.numUtilisateur = C.numCompetiteur
+    LEFT JOIN Compétiteur C ON U.numUtilisateur = C.numCompetiteur
     LEFT JOIN Directeur D ON U.numUtilisateur = D.numDirecteur
     LEFT JOIN President P ON U.numUtilisateur = P.numPres
     WHERE U.numUtilisateur = ?");
