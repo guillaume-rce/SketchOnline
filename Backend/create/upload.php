@@ -10,9 +10,26 @@ FormData(
 )
 */
 $target_dir = "../../Uploads/"; // Spécifiez le répertoire où le fichier sera sauvegardé
-$type_of_upload = $_POST["type_of_upload"];
-$contest_id = $_POST["contest_id"];
-$user_id = $_POST["user_id"];
+/*
+$type_of_upload = isset($_POST["type_of_upload"]) ? $_POST["type_of_upload"] : null;
+$contest_id = isset($_POST["contest_id"]) ? $_POST["contest_id"] : null;
+$user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
+
+// Handle errors for missing data
+if (!$type_of_upload) {
+    die("Error: 'type_of_upload' is missing.");
+}
+if (!$contest_id) {
+    die("Error: 'contest_id' is missing.");
+}
+if (!$user_id) {
+    die("Error: 'user_id' is missing.");
+}*/
+//Get data from FormData
+$data = json_decode(file_get_contents("php://input"));
+$type_of_upload = $data->type_of_upload;
+$contest_id = $data->contest_id;
+$user_id = $data->user_id;
 
 switch ($type_of_upload) {
     case "contest":
@@ -44,12 +61,12 @@ function createFolder($target_dir, $subfolders) {
 }
 
 
-$uploadOk = 1;
+$file = $_FILES["fileToUpload"];
 
-if(isset($_FILES["fileToUpload"]["tmp_name"])) {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+if(isset($file["tmp_name"])) {
+    if (move_uploaded_file($file["tmp_name"], $target_file)) {
         echo json_encode(["status" => "success", 
-            "message" => "Le fichier ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " a été téléchargé.",
+            "message" => "Le fichier ". htmlspecialchars( basename( $file["name"])). " a été téléchargé.",
             "path" => $target_file]);
 
     } else {
