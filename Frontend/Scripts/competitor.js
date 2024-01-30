@@ -9,7 +9,8 @@ function loadContest() {
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
 
-    postData = {
+    /*
+    var postData = {
         userId: id
     };
 
@@ -20,6 +21,22 @@ function loadContest() {
         })
         .catch((error) => {
             console.error(error);
+        });
+    */
+   
+    fetch('/SketchOnline/Backend/competitions.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: id }),
+        })
+        .then((data) => {
+            console.log('Success:', data);
+            data.status === 'success' ? OnEventsSuccess(data) : OnEventsError(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
 }
 
