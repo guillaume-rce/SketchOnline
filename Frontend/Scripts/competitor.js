@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadContest() {    
-    var fuck = localStorage.getItem('userData');    
-    var tamere = JSON.parse(fuck).email;
+    var data = localStorage.getItem('userData');    
+    var id = JSON.parse(data).userId;
 
-    data = {
-        email: tamere
+    postData = {
+        userId: id
     };
 
-    Api.request("/SketchOnline/Backend/competitions.php", "POST", data)
+    Api.request("/SketchOnline/Backend/competitions.php", "POST", postData)
         .then(response => {
             console.log(response.status);
             response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
