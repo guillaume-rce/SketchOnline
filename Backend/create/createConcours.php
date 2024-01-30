@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dateDebut = $data->dateDebut;
     $dateFin = $data->dateFin;
     $etat = $data->etat;
+    
 
     global $connexion;
 

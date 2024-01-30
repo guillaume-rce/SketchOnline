@@ -10,20 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Décoder le JSON en un objet PHP
     $data = json_decode($json);
 
-    $commentaire = $data->commentaire;
-    $classement = $data->classement;
-    $dateRemise = $data->dateRemise;
-    $leDessin = $data->leDessin;
-    $numCompetiteur = $data->numCompetiteur;
-    $numConcours = $data->numConcours;
-    $numJury = $data->numJury;
+    $commentaire = $data->comment;
+    // $classement = $data->classement;
+    $dateRemise = $data->date;
+    $leDessin = $data->path; // Path
+    $numCompetiteur = $data->user_id;
+    $numConcours = $data->contest_id;
+    // $numJury = $data->numJury;
 
     global $connexion;
 
     $stmt = $connexion->prepare("INSERT INTO Dessin (commentaire, classement, dateRemise, leDessin, numCompetiteur, numConcours, numJury)
 VALUES
   (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $commentaire, $classement, $dateRemise, $leDessin, $numCompetiteur, $numConcours, $numJury);
+    $stmt->bind_param("sssssss", $commentaire, null, $dateRemise, $leDessin, $numCompetiteur, $numConcours, null);
     if ($stmt->execute()) {
         echo json_encode(array('status' => 'success', 'message' => 'Le dessin a été ajouté avec succès.'));
         http_response_code(200);

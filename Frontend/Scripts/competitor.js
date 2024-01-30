@@ -56,12 +56,40 @@ function onSubmit() {
     var file = document.getElementById("file").files[0];
     var comment = document.getElementById("comment").value;
 
-    var submissionData = new FormData();
-    submissionData.append("contestId", contestId);
-    submissionData.append("file", file);
-    submissionData.append("comment", comment);
+    var data = localStorage.getItem('userData');    
+    var userId = JSON.parse(data).id;
 
-    Api.request("/SketchOnline/Backend/submit.php", "POST", submissionData)
+    var uploadData = new FormData();
+    uploadData.append("type_of_upload", "drawing");
+    uploadData.append("contest_id", contestId);
+    uploadData.append("user_id", userId);
+    uploadData.append("fileToUpload", file);
+
+    Api.request("/SketchOnline/Backend/create/upload.php", "POST", uploadData)
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnUploadSuccess(response, contestId, comment, userId) : OnUploadError(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+function OnUploadSuccess(data, contestId, comment, userId) {
+    var path = data.path;
+
+    date = new Date().toISOString().slice(0, 19);
+    date = date.split('T')[0];
+
+    var drawingData = {
+        contest_id: contestId,
+        user_id: userId,
+        date: date,
+        path: path,
+        comment: comment
+    }
+
+    Api.request("/SketchOnline/Backend/create/createDessin.php", "POST", drawingData)
         .then(response => {
             console.log(response.status);
             response.status === 'success' ? OnSubmitSuccess(response) : OnSubmitError(response);
@@ -71,12 +99,14 @@ function onSubmit() {
         });
 }
 
-function OnSubmitSuccess(data) {
-    console.log(data);
-    alert("Votre dessin a bien été envoyé !");
+function OnUploadError(data) {
+    alert("Erreur lors de l'upload du dessin");
 }
 
-function OnSubmitError(error) {
-    console.log(error);
-    alert("Une erreur est survenue lors de l'envoi de votre dessin !");
+function OnSubmitSuccess(data) {
+    alert("Le dessin a bien été soumis");
+}
+
+function OnSubmitError(data) {
+    alert("Erreur lors de la soumission du dessin");
 }
