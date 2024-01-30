@@ -1,5 +1,5 @@
 <?php
-console.log("test");
+echo "<script>console.log('Debug Objects: " . "TEST" . "' );</script>";
 
 require_once('./configdb.php');
 $connexion = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
@@ -13,7 +13,7 @@ if ($connexion->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"));
     $userId = $data->userId;
-    console.log($userId);
+    echo "<script>console.log('Debug Objects: " . $userId . "' );</script>";
 
     if ($userId == null) {
         echo json_encode(["status" => "failure", "message" => "userId non fourni"]);
@@ -28,17 +28,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $result = $requete->get_result();
     $competitionList = [];
-    console.log($result);
+    echo "<script>console.log('Debug Objects: " . $result . "' );</script>";
 
     while ($row = $result->fetch_assoc()) {
-        console.log($row);
+        echo "<script>console.log('Debug Objects: " . $row . "' );</script>";
 
         $competitionList[] = [
             "numConcours" => $row['numConcours'],
             "titre" => $row['titre']
         ];
 
-        console.log($competitionList);
+        echo "<script>console.log('Debug Objects: " . $competitionList . "' );</script>";
     }
 
     $data = [

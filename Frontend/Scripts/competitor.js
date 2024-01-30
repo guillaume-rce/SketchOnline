@@ -32,8 +32,8 @@ function loadContest() {
         body: JSON.stringify({ userId: id }),
         })
         .then((data) => {
-            console.log(data.status);
-            data.status === 'success' ? OnEventsSuccess(data) : OnEventsError(data);
+            console.log(data.json().status);
+            data.json().status === 'success' ? OnEventsSuccess(data) : OnEventsError(data);
         })
         .catch((error) => {
             console.error('Error:', error);
