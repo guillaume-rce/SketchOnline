@@ -45,7 +45,7 @@
   /* Status Colors */
   --dl-color-status-notstarted: #f1948a;
   --dl-color-status-inprogress: #7fb3d5;
-  --dl-color-status-waitingresults: #c2e24e;
+  --dl-color-status-waitingresults: #c0b070;
   --dl-color-status-evaluated: #81ac6d;
 }
 .button {
