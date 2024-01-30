@@ -84,6 +84,7 @@ function AddEvent(event) {
     var image = document.createElement('img');
     image.id = 'image';
     image.alt = 'image';
+    console.log(event.affiche);
     image.src = event.affiche;
     image.classList.add('event-image1');
     eventPost.appendChild(image);
