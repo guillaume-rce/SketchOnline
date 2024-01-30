@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if the user is connected
     if (localStorage.getItem('userData') !== null) {
         // Get the profile infos
-        GetProfileInfos();
+        OnProfileInfosSuccess();
     }
 });
 
