@@ -15,29 +15,12 @@ function loadContest() {
 
     Api.request("/SketchOnline/Backend/competitions.php", "POST", postData)
         .then(response => {
-            console.log(response);
-            //response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
+            console.log(response.status);
+            response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
         })
         .catch((error) => {
             console.error(error);
         });
-
-        /*
-    fetch('/SketchOnline/Backend/competitions.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: id }),
-        })
-        .then((response) => {
-            console.log(response);
-            //response.status === 'success' ? OnEventsSuccess(data) : OnEventsError(data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-        */
 }
 
 function OnEventsSuccess(data) {
@@ -58,8 +41,8 @@ function OnEventsSuccess(data) {
     for (var i = 0; i < data.events.length; i++) {
         // Add the event to the list
         var option = document.createElement("option");
-        option.value = data.events[i].id;
-        option.text = data.events[i].title;
+        option.value = data.events[i].numConcours;
+        option.text = data.events[i].titre;
         list.appendChild(option);
     }
 }
