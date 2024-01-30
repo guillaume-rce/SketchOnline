@@ -200,7 +200,7 @@
 .home-container1 {
   gap: var(--dl-space-space-oneandhalfunits);
   flex: 0 0 auto;
-  width: 40%;
+  width: 30%;
   height: auto;
   display: flex;
   padding: var(--dl-space-space-unit);
