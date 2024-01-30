@@ -11,7 +11,7 @@ if ($connexion->connect_error) {
 }
 
 // Exécuter la requête
-$requete = $connexion->prepare("SELECT * FROM Dessins");
+$requete = $connexion->prepare("SELECT * FROM Dessin");
 $requete->execute();
 $result = $requete->get_result();
 
@@ -23,7 +23,7 @@ while ($row = $result->fetch_assoc()) {
 
 $data = [
     "status" => "success", // Ajouter le champ 'status'
-    "events" => $eventList
+    "gallery" => $eventList
 ];
 
 // Fermeture de la requête et de la connexion

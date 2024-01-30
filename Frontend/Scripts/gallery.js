@@ -1,8 +1,7 @@
 // Verify if the page is loaded
-document.addgalleryListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     Getgallerys();
 });
-
 
 function OnGetgallerysSuccess(data) {
     // data = {
@@ -35,25 +34,28 @@ function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
 
 function Getgallerys() {
     ApiGet.request('/SketchOnline/Backend/gallery.php', 'GET')
-    .then(response => {
-        console.log(response.status);
-        response.status === 'success' ? OnGetgallerysSuccess(response) : OnGetgallerysError(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-    
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnGetgallerysSuccess(response) : OnGetgallerysError(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function Addgallery(gallery) {
     /*
-    gallery = {
-        numDessin: 'xxxx',
-        numConcours: 'xxxx',
-        commentaire: 'xxxx',
-        classement: 'xxxx',
-        le dessi: 'xxxx'
-    };
+    "events": [
+        {
+            "numDessin": 1,
+            "numCompetiteur": 5,
+            "numConcours": 401,
+            "numEvaluateur": 10,
+            "commentaire": "commentaire",
+            "classement": 5,
+            "dateRemise": "2019-01-01",
+            "leDessin": "leDessin"
+        },
     */
     
     // The goal is to add an gallery (exemple above) to the gallery list (div with id="gallerys-container")
@@ -63,7 +65,7 @@ function Addgallery(gallery) {
     galleryPost.classList.add('gallery-post');
 
     // Change the background color of the post depending on the status
-    var statusColor = GetStatusColor(gallery.etat);
+    var statusColor = GetStatusColor();
     galleryPost.style.backgroundColor = `var(${statusColor})`;
 
     // Create the id text
@@ -71,7 +73,7 @@ function Addgallery(gallery) {
     galleryText16.classList.add('gallery-text16');
 
     var idSpan = document.createElement('span');
-    idSpan.innerHTML = gallery.numConcours;
+    idSpan.innerHTML = gallery.classement;
     galleryText16.appendChild(idSpan);
 
     var br = document.createElement('br');
@@ -83,15 +85,14 @@ function Addgallery(gallery) {
     var image = document.createElement('img');
     image.id = 'image';
     image.alt = 'image';
-    console.log(gallery.affiche);
-    image.src = gallery.affiche;
+    image.src = gallery.leDessin;
     image.classList.add('gallery-image1');
     galleryPost.appendChild(image);
 
     // Create the title
     var title = document.createElement('h1');
     var titleSpan = document.createElement('span');
-    titleSpan.innerHTML = gallery.titre;
+    titleSpan.innerHTML = "dessin réalisé par " + gallery.numCompetiteur;
     title.appendChild(titleSpan);
     var br = document.createElement('br');
     title.appendChild(br);
@@ -99,7 +100,7 @@ function Addgallery(gallery) {
 
     // Create the theme
     var themeSpan = document.createElement('span');
-    themeSpan.innerHTML = gallery.thème;
+    themeSpan.innerHTML = gallery.commentaire;
     galleryPost.appendChild(themeSpan);
 
     // Add the post to the gallery list
@@ -107,15 +108,6 @@ function Addgallery(gallery) {
     gallerysContainer.appendChild(galleryPost);
 }
 
-function GetStatusColor(status) {
-    switch (status) {
-        case 'évalué':
-            return '--dl-color-status-evaluated';
-        case 'attente':
-            return '--dl-color-status-waitingresults';
-        case 'en cours':
-            return '--dl-color-status-inprogress';
-        default:
-            return '--dl-color-status-notstarted';
-    }
+function GetStatusColor() {
+    return '--dl-color-status-evaluated';
 }
