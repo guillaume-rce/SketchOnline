@@ -15,6 +15,9 @@ $target_dir = "../../Uploads/"; // Spécifiez le répertoire où le fichier sera
 $type_of_upload = $params->type_of_upload;
 $contest_id = $params->contest_id;
 $user_id = $params->user_id;
+error_log("Type de téléchargement: $type_of_upload");
+error_log("ID du concours: $contest_id");
+error_log("ID de l'utilisateur: $user_id");
 
 switch ($type_of_upload) {
     case "contest":
@@ -29,6 +32,8 @@ switch ($type_of_upload) {
         throw new Exception("Type de téléchargement non reconnu: $type_of_upload");
         
 }
+// Log le chemin du fichier
+error_log($target_file);
 
 // Creer un fonction qui prend en parametre les sous dossiers (le nombre n'est pas fixe) et qui les creer dans le serveur puis renvoi le chemin du fichier
 // Exemple: Uploads/contest_1/drawing_1/
@@ -47,6 +52,8 @@ function createFolder($target_dir, $subfolders) {
 
 
 $file = $_FILES["fileToUpload"];
+error_log(print_r($file, true));
+error_log($file["tmp_name"]);
 
 if(isset($file["tmp_name"])) {
     if (move_uploaded_file($file["tmp_name"], $target_file)) {

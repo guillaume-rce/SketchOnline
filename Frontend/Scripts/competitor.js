@@ -68,7 +68,7 @@ function onSubmit() {
     Api.request("/SketchOnline/Backend/create/upload.php", "POST", uploadData)
         .then(response => {
             console.log(response);
-            // response.status === 'success' ? OnUploadSuccess(response, contestId, comment, userId) : OnUploadError(response);
+            response.status === 'success' ? OnUploadSuccess(response, contestId, comment, userId) : OnUploadError(response);
         })
         .catch((error) => {
             console.error(error);
