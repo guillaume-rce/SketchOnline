@@ -26,14 +26,14 @@ function getEvaluations() {
     //     },
     //     ...
     // }
-    var uData = localStorage.getItem('userData');    
-    var uEmail = JSON.parse(uData).email;
+    var data = localStorage.getItem('userData');    
+    var id = JSON.parse(data).userId;
 
-    data = {
-        email: uEmail,
+    var postData = {
+        userId: id
     };
 
-    ApiGet.request("/SketchOnline/Backend/evaluations.php", "GET", data)
+    ApiGet.request("/SketchOnline/Backend/evaluations.php", "GET", postData)
     .then(response => {
         console.log(response.status);
         response.status === 'success' ? onEvaluationsReceived(response) : onErrorsReceived(response);
