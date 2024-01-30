@@ -197,6 +197,9 @@
   align-items: center;
   justify-content: center;
 }
+.administrator-select {
+  width: 100%;
+}
 .administrator-textinput2 {
   width: 100%;
 }

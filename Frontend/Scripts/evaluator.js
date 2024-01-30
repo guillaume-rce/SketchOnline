@@ -26,11 +26,11 @@ function getEvaluations() {
     //     },
     //     ...
     // }
-    var fuck = localStorage.getItem('userData');    
-    var tamere = JSON.parse(fuck).email;
+    var uData = localStorage.getItem('userData');    
+    var uEmail = JSON.parse(uData).email;
 
     data = {
-        email: tamere,
+        email: uEmail,
     };
 
     ApiGet.request("/SketchOnline/Backend/evaluations.php", "GET", data)

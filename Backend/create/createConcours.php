@@ -10,18 +10,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Décoder le JSON en un objet PHP
     $data = json_decode($json);
 
+    $name = $data->name;
+    $president = $data->president;
+    $startDate = $data->startDate;
+    $endDate = $data->endDate;
     $theme = $data->theme;
-    $dateDebut = $data->dateDebut;
-    $dateFin = $data->dateFin;
-    $etat = $data->etat;
-    
+    $description = $data->description;
+    $rules = $data->rules;
+    $criteria = $data->criteria;    
 
     global $connexion;
 
-    $stmt = $connexion->prepare("INSERT INTO Concours (theme, dateDebut, dateFin, etat)
+    $stmt = $connexion->prepare("INSERT INTO Concours (nom, president, dateDebut, dateFin, theme, description, regles, criteres) VALUES
 VALUES
-  (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $theme, $dateDebut, $dateFin, $etat);
+  (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $name, $president, $startDate, $endDate, $theme, $description, $rules, $criteria);
     if ($stmt->execute()) {
         echo json_encode(array('status' => 'success', 'message' => 'Le concours a été ajouté avec succès.'));
         http_response_code(200);

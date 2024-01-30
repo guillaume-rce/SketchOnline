@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function loadContest() {    
+function loadContest() {  
+    // Get the user id  
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
 
@@ -13,6 +14,7 @@ function loadContest() {
         userId: id
     };
 
+    // Get the events
     Api.request("/SketchOnline/Backend/competitions.php", "POST", postData)
         .then(response => {
             console.log(response.status);
@@ -52,6 +54,7 @@ function OnEventsError(error) {
 }
 
 function onSubmit() {
+    // Get the data
     var contestId = document.getElementById("contest").value;
     var file = document.getElementById("file").files[0];
     var comment = document.getElementById("comment").value;
@@ -59,6 +62,7 @@ function onSubmit() {
     var data = localStorage.getItem('userData');    
     var userId = JSON.parse(data).id;
 
+    // Erreur dans l'envoi de l'image, pas de message mais l'image n'est pas envoyée
     var uploadData = new FormData(document.getElementById("upload_form"), document.getElementById("upload_image"));
     uploadData.append("type_of_upload", "drawing");
     uploadData.append("contest_id", contestId);
@@ -76,6 +80,7 @@ function onSubmit() {
 }
 
 function OnUploadSuccess(data, contestId, comment, userId) {
+    // if uplaod success, send the drawing data
     var path = data.path;
 
     date = new Date().toISOString().slice(0, 19);
