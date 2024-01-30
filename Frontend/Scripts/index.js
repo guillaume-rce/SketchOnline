@@ -39,7 +39,7 @@ function OnProfileInfosSuccess(data) {
 
     // Create the home-profile-image element
     var homeProfileImage = document.createElement('img');
-    var photo = JSON.parse(data).photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
+    var photo = typeof(JSON.parse(data).photo) == "undefined" || JSON.parse(data).photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
     homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
