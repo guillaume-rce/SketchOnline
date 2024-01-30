@@ -125,13 +125,17 @@ function createEvaluation(contestName, image, id) {
     master.appendChild(container);
 }
 
-function sendEvaluation(id) {
-    var note = document.getElementById("note" + id).value;
-    var commentaire = document.getElementById("commentaire" + id).value;
+function sendEvaluation(idDessin) {
+    var note = document.getElementById("note" + idDessin).value;
+    var commentaire = document.getElementById("commentaire" + idDessin).value;
+
+    var data = localStorage.getItem('userData');    
+    var id = JSON.parse(data).userId;
 
     Api.request("/SketchOnline/Backend/evaluate.php", "POST", {
         note: note,
         commentaire: commentaire,
-        numDessin: id
+        numDessin: idDessin,
+        numEvaluateur: id
     });
 }
