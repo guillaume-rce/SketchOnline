@@ -9,12 +9,11 @@ function loadContest() {
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
 
-    /*
     var postData = {
         userId: id
     };
 
-    Api.request("/SketchOnline/Backend/competitions.php", "POST", postData)
+    Api.request("/SketchOnline/Backend/competitions.php", "POST", JSON.stringify(postData))
         .then(response => {
             console.log(response.status);
             response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
@@ -22,8 +21,8 @@ function loadContest() {
         .catch((error) => {
             console.error(error);
         });
-    */
 
+    /*
     fetch('/SketchOnline/Backend/competitions.php', {
         method: 'POST',
         headers: {
@@ -38,6 +37,7 @@ function loadContest() {
         .catch((error) => {
             console.error('Error:', error);
         });
+    */
 }
 
 function OnEventsSuccess(data) {
