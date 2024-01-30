@@ -23,7 +23,7 @@ function loadContest() {
             console.error(error);
         });
     */
-   
+
     fetch('/SketchOnline/Backend/competitions.php', {
         method: 'POST',
         headers: {
@@ -32,7 +32,7 @@ function loadContest() {
         body: JSON.stringify({ userId: id }),
         })
         .then((data) => {
-            console.log('Success:', data);
+            console.log(data.status);
             data.status === 'success' ? OnEventsSuccess(data) : OnEventsError(data);
         })
         .catch((error) => {
