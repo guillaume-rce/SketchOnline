@@ -14,7 +14,7 @@ function onRedirectToMy() {
 
 function OnRoleSuccess(response) {
     var role = response.role;
-    
+    console.log(role);
     switch (role) {
         case 'admin':
             window.location.href = "/SketchOnline/Frontend/Pages/admin.html";
