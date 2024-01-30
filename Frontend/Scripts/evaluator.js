@@ -136,6 +136,7 @@ function sendEvaluation(idDessin) {
         note: note,
         commentaire: commentaire,
         numDessin: idDessin,
-        numEvaluateur: id
-    });
+        numEvaluateur: id,
+        dateEvaluation: new Date().toISOString().slice(0, 10)
+        });
 }

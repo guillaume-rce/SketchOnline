@@ -17,12 +17,13 @@ if ($connexion->connect_error) {
     commentaire: commentaire,
     numDessin: idDessin,
     numEvaluateur: id
+    dataEvaluation: dataEvaluation
 }
 */
 $requete = $connexion->prepare(
-    "INSERT INTO Evaluation (note, commentaire, numDessin, numEvaluateur) VALUES (?, ?, ?, ?)"
+    "INSERT INTO Evaluation (note, commentaire, numDessin, numEvaluateur, dateEvaluation) VALUES (?, ?, ?, ?, ?)"
 );
-$requete->bind_param("aaaa", $_POST["note"], $_POST["commentaire"], $_POST["numDessin"], $_POST["numEvaluateur"]);
+$requete->bind_param("aaaaa", $_POST["note"], $_POST["commentaire"], $_POST["numDessin"], $_POST["numEvaluateur"], $_POST["dateEvaluation"]);
 $requete->execute();
 $result = $requete->get_result();
 

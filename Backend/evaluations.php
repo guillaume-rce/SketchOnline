@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die();
     }
 
-    $sql = ""; // TODO: SQL request to get the evaluations of the user
-    $requete = $connexion->prepare($sql);
+    // TODO: SQL request to get the evaluations of the user
+    $requete = $connexion->prepare("SELECT * FROM Evaluation WHERE numEvaluateur = ?");
     $requete->bind_param("i", $userId);
     $requete->execute();
 
