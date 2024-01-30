@@ -59,7 +59,7 @@ function onSubmit() {
     var data = localStorage.getItem('userData');    
     var userId = JSON.parse(data).id;
 
-    var uploadData = new FormData();
+    var uploadData = new FormData(document.getElementById("upload_form"), document.getElementById("upload_image"));
     uploadData.append("type_of_upload", "drawing");
     uploadData.append("contest_id", contestId);
     uploadData.append("user_id", userId);

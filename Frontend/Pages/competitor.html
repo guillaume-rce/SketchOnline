@@ -141,7 +141,7 @@
         </header>
         <div class="competitor-container1">
           <h1>Participer à un concourt</h1>
-          <form class="competitor-form">
+          <form class="competitor-form" id="upload_form">
             <select id="contest" required="true" class="competitor-select" title="Contest">
               <!-- 
               <option value="1">Contest 1</option>
@@ -160,7 +160,7 @@
               placeholder="placeholder"
               class="competitor-textarea textarea"
             ></textarea>
-            <button type="button" class="competitor-button button" onclick="onSubmit()">
+            <button type="button" class="competitor-button button" id="upload_image" onclick="onSubmit()">
               Envoyer
             </button>
           </form>
