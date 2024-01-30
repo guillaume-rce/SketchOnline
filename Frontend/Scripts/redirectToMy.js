@@ -11,3 +11,29 @@ function onRedirectToMy() {
             console.error(error);
         });
 }
+
+function OnRoleSuccess(response) {
+    var role = response.role;
+    
+    switch (role) {
+        case 'admin':
+            window.location.href = "/SketchOnline/Frontend/Pages/admin.html";
+            break;
+        case 'director':
+            window.location.href = "/SketchOnline/Frontend/Pages/director.html";
+            break;
+        case 'president':
+            window.location.href = "/SketchOnline/Frontend/Pages/president.html";
+            break;
+        case 'competitor':
+            window.location.href = "/SketchOnline/Frontend/Pages/competitor.html";
+            break;
+        default:
+            window.location.href = "/SketchOnline/Frontend/Pages/indexlog.html";
+            break;
+    }
+}
+
+function OnRoleError(response) {
+    console.log(response);
+}

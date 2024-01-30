@@ -44,6 +44,7 @@ function OnProfileInfosSuccess(data) {
     homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
+    homeProfileImage.onclick = onRedirectToMy;
 
     // Change the color of the home-profile-image border
     homeProfileImage.style.borderColor = GetColorVar(data.rank);
