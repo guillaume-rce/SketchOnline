@@ -9,21 +9,12 @@ FormData(
     }
 )
 */
+$params = json_decode($_POST['params']);
 $target_dir = "../../Uploads/"; // Spécifiez le répertoire où le fichier sera sauvegardé
-$type_of_upload = isset($_POST["type_of_upload"]) ? $_POST["type_of_upload"] : null;
-$contest_id = isset($_POST["contest_id"]) ? $_POST["contest_id"] : null;
-$user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
 
-// Handle errors for missing data
-if (!$type_of_upload) {
-    throw new Exception("Error: 'type_of_upload' is missing.");
-}
-if (!$contest_id) {
-    throw new Exception("Error: 'contest_id' is missing.");
-}
-if (!$user_id) {
-    throw new Exception("Error: 'user_id' is missing.");
-}
+$type_of_upload = $params->type_of_upload;
+$contest_id = $params->contest_id;
+$user_id = $params->user_id;
 
 switch ($type_of_upload) {
     case "contest":
