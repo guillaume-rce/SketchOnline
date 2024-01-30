@@ -11,7 +11,7 @@ if ($connexion->connect_error) {
 }
 
 // Exécuter la requête
-$requete = $connexion->prepare("SELECT * FROM Dessin");
+$requete = $connexion->prepare("SELECT * FROM Dessins");
 $requete->execute();
 $result = $requete->get_result();
 

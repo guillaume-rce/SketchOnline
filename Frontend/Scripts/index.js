@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('userData') !== null) {
         // Get the profile infos
         GetProfileInfos();
+
     }
     });
 

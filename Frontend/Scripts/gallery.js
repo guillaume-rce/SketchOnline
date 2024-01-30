@@ -34,7 +34,6 @@ function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
 }
 
 function Getgallerys() {
-    // var data = {}
     ApiGet.request('/SketchOnline/Backend/gallery.php', 'GET')
     .then(response => {
         console.log(response.status);
@@ -50,10 +49,10 @@ function Addgallery(gallery) {
     /*
     gallery = {
         numDessin: 'xxxx',
-        titre: 'xxxx',
-        thème: 'xxxx',
-        affiche: 'xxxx',
-        etat: 'xxxx'
+        numConcours: 'xxxx',
+        commentaire: 'xxxx',
+        classement: 'xxxx',
+        le dessi: 'xxxx'
     };
     */
     
@@ -84,6 +83,7 @@ function Addgallery(gallery) {
     var image = document.createElement('img');
     image.id = 'image';
     image.alt = 'image';
+    console.log(gallery.affiche);
     image.src = gallery.affiche;
     image.classList.add('gallery-image1');
     galleryPost.appendChild(image);
@@ -111,8 +111,8 @@ function GetStatusColor(status) {
     switch (status) {
         case 'évalué':
             return '--dl-color-status-evaluated';
-        case 'en attente':
-            return '--dl-color-status-watingresults';
+        case 'attente':
+            return '--dl-color-status-waitingresults';
         case 'en cours':
             return '--dl-color-status-inprogress';
         default:
