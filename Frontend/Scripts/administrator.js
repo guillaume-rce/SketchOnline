@@ -32,16 +32,23 @@ function Contest(name, image, startDate, endDate, theme,
     {
         var data = JSON.stringify(this);
         
-        $.ajax({
-            url: "/Backend/administrator.php",
-            type: "POST",
-            data: data,
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (data) {
-                console.log(data);
-            }
+       Api.request(/SketchOnline/Backend/contest.php, 'POST', data)
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnSubmitSuccess(response) : OnSubmitError(response);
+        })
+        .catch((error) => {
+            console.error(error);
         });
     }
+
+}
+function OnSubmitSuccess(data)
+{
+    alert("Le concours a bien été créé");
+}
+
+function OnSubmitError(data)
+{
+    alert("Erreur lors de la création du concours");
 }

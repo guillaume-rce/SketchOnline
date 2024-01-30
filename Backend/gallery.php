@@ -11,29 +11,19 @@ if ($connexion->connect_error) {
 }
 
 // Exécuter la requête
-$requete = $connexion->prepare("SELECT c.numConcours, c.titre
-FROM Utilisateurs u
-JOIN Competiteur comp ON u.numUtilisateur = comp.numCompetiteur
-JOIN ParticipeComp pc ON comp.numCompetiteur = pc.numCompetiteur
-JOIN Concours c ON pc.numConcours = c.numConcours
-WHERE u.email = ?");
-$requete->bind_param("s", $_GET['email']);
-
+$requete = $connexion->prepare("SELECT * FROM Dessin");
 $requete->execute();
 $result = $requete->get_result();
 
-$competitionList = [];
+$eventList = [];
 // Récupérer les résultats avec une boucle
 while ($row = $result->fetch_assoc()) {
-    $competitionList [] = [
-        "numConcours" => $row['numConcours'],
-        "titre" => $row['titre']
-    ];
+    $eventList[] = $row;
 }
 
 $data = [
     "status" => "success", // Ajouter le champ 'status'
-    "events" => $competitionList
+    "events" => $eventList
 ];
 
 // Fermeture de la requête et de la connexion
