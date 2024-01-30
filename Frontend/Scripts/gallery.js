@@ -1,9 +1,11 @@
 // Verify if the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("DOM fully loaded and parsed");
     Getgallerys();
 });
 
 function OnGetgallerysSuccess(data) {
+    console.log("OnGetgallerysSuccess called with data:", data);
     // Loop through the gallerys
     for (var i = 0; i < data.gallerys.length; i++) {
         // Add the gallery to the gallery list
@@ -12,6 +14,7 @@ function OnGetgallerysSuccess(data) {
 }
 
 function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
+    console.log("OnGetgallerysError called with jqXHR, textStatus, errorThrown:", jqXHR, textStatus, errorThrown);
     var errorMessage = "Erreur AJAX lors de la connexion : " + textStatus;
     if (errorThrown) {
         errorMessage += "\n" + errorThrown;
@@ -20,17 +23,21 @@ function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
 }
 
 function Getgallerys() {
+    console.log("Getgallerys called");
     ApiGet.request('/SketchOnline/Backend/gallery.php', 'GET')
         .then(response => {
+            console.log("ApiGet.request then called with response:", response);
             console.log(response.status);
             response.status === 'success' ? OnGetgallerysSuccess(response) : OnGetgallerysError(response);
         })
         .catch((error) => {
+            console.log("ApiGet.request catch called with error:", error);
             console.error(error);
         });
 }
 
 function Addgallery(gallery) {
+    console.log("Addgallery called with gallery:", gallery);
     // Create the post
     var galleryPost = document.createElement('div');
     galleryPost.classList.add('gallery-post');
@@ -79,5 +86,6 @@ function Addgallery(gallery) {
 
     // Add the post to the gallery list
     var gallerysContainer = document.querySelector('.gallery-container1');
+    console.log("Adding gallery post to gallerysContainer:", gallerysContainer);
     gallerysContainer.appendChild(galleryPost);
 }

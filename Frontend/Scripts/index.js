@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
     });
-
+document.getElementById('disconnect').addEventListener('click', function() {
+    localStorage.removeItem('userData');
+    window.location.href = '/SketchOnline/Frontend/Pages/index.html';
+});
 function GetProfileInfos() {
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
