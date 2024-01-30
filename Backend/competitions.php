@@ -9,8 +9,9 @@ if ($connexion->connect_error) {
     die();
 }
 
+$email = $data -> email;
 // Vérification de la présence de l'email dans $_GET
-if (!isset($_GET['email'])) {
+if ($email == null) {
     echo json_encode(["status" => "failure", "message" => "Email non fourni"]);
     die();
 }
@@ -24,7 +25,7 @@ if (!$requete) {
     die();
 }
 
-$requete->bind_param("s", $_GET['email']);
+$requete->bind_param("s", $email);
 if (!$requete->execute()) {
     echo json_encode(["status" => "failure", "message" => "Erreur d'exécution de la requête"]);
     $requete->close();
