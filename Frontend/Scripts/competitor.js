@@ -13,7 +13,7 @@ function loadContest() {
         email: tamere
     };
 
-    ApiGet.request("/SketchOnline/Backend/competitions.php", "GET", data)
+    Api.request("/SketchOnline/Backend/competitions.php", "POST", data)
         .then(response => {
             console.log(response.status);
             response.status === 'success' ? OnEventsSuccess(response) : OnEventsError(response);
