@@ -10,7 +10,6 @@ FormData(
 )
 */
 $target_dir = "../../Uploads/"; // Spécifiez le répertoire où le fichier sera sauvegardé
-/*
 $type_of_upload = isset($_POST["type_of_upload"]) ? $_POST["type_of_upload"] : null;
 $contest_id = isset($_POST["contest_id"]) ? $_POST["contest_id"] : null;
 $user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
@@ -24,12 +23,7 @@ if (!$contest_id) {
 }
 if (!$user_id) {
     die("Error: 'user_id' is missing.");
-}*/
-//Get data from FormData
-$data = json_decode(file_get_contents("php://input"));
-$type_of_upload = $data->type_of_upload;
-$contest_id = $data->contest_id;
-$user_id = $data->user_id;
+}
 
 switch ($type_of_upload) {
     case "contest":
