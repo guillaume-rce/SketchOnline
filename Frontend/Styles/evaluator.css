@@ -20,7 +20,7 @@
   background-color: var(--dl-color-gray-white);
 }
 .evaluator-image {
-  height: 6rem;
+  height: 2rem;
 }
 .evaluator-desktop-menu {
   flex: 1;
@@ -205,7 +205,7 @@
   justify-content: center;
 }
 .evaluator-textinput {
-  width: auto;
+  width: 54px;
   height: 100%;
   padding-top: 6px;
   padding-left: var(--dl-space-space-halfunit);

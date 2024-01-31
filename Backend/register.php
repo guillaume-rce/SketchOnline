@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
-
-require_once('../configdb.php');
+require_once('./configdb.php');
 
 $response = array(); // Tableau pour la réponse JSON
 
@@ -32,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("ssss", $name, $firstname, $email, $password);
 
                 if ($stmt->execute()) {
-                    $response['success'] = "Inscription réussie !";                    
+                    $response['success'] = "Inscription réussie !";
                 } else {
                     $response['error'] = "Erreur lors de l'inscription : " . $stmt->error;
                 }
@@ -43,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mysqli->close();
         }
     }
+} else {
+    $response['error'] = "Méthode non autorisée. Utilisez la méthode POST.";
 }
 
 // Retournez la réponse en format JSON

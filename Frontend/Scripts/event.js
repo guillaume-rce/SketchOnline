@@ -1,7 +1,6 @@
 // Verify if the page is loaded
-$(document).ready(function() {
-    // Get the events
-    GetEvents( "theme", "affiche", "etat"], 0, 10);
+document.addEventListener('DOMContentLoaded', function () {
+    GetEvents();
 });
 
 
@@ -34,37 +33,27 @@ function OnGetEventsError(jqXHR, textStatus, errorThrown) {
     alert(errorMessage);
 }
 
-function GetEvents(infos, minEvents, maxEvents, events=[]) {
-    var url = "https://localhost:8080/Backend/event.php";
-    var data = {
-        events: events,
-        infos: infos,
-        minEvents: minEvents,
-        maxEvents: maxEvents
-    }
-
-    $.ajax({
-        url: url,
-        type: "GET",
-        data: data,
-        contentType: "application/json",
-        success: function(data) {
-            OnEventsSuccess(data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            OnEventsError(jqXHR, textStatus, errorThrown);
-        }
+function GetEvents() {
+    // var data = {}
+    ApiGet.request('/SketchOnline/Backend/event.php', 'GET')
+    .then(response => {
+        console.log(response.status);
+        response.status === 'success' ? OnGetEventsSuccess(response) : OnGetEventsError(response);
+    })
+    .catch((error) => {
+        console.error(error);
     });
+    
 }
 
 function AddEvent(event) {
     /*
     event = {
-        id: 'xxxx',
-        title: 'xxxx',
-        theme: 'xxxx',
-        image: 'xxxx',
-        status: 'xxxx'
+        numConcours: 'xxxx',
+        titre: 'xxxx',
+        thème: 'xxxx',
+        affiche: 'xxxx',
+        etat: 'xxxx'
     };
     */
     
@@ -75,7 +64,7 @@ function AddEvent(event) {
     eventPost.classList.add('event-post');
 
     // Change the background color of the post depending on the status
-    var statusColor = GetStatusColor(event.status);
+    var statusColor = GetStatusColor(event.etat);
     eventPost.style.backgroundColor = `var(${statusColor})`;
 
     // Create the id text
@@ -83,7 +72,7 @@ function AddEvent(event) {
     eventText16.classList.add('event-text16');
 
     var idSpan = document.createElement('span');
-    idSpan.innerHTML = event.id;
+    idSpan.innerHTML = event.numConcours;
     eventText16.appendChild(idSpan);
 
     var br = document.createElement('br');
@@ -95,14 +84,15 @@ function AddEvent(event) {
     var image = document.createElement('img');
     image.id = 'image';
     image.alt = 'image';
-    image.src = event.image;
+    console.log(event.affiche);
+    image.src = event.affiche;
     image.classList.add('event-image1');
     eventPost.appendChild(image);
 
     // Create the title
     var title = document.createElement('h1');
     var titleSpan = document.createElement('span');
-    titleSpan.innerHTML = event.title;
+    titleSpan.innerHTML = event.titre;
     title.appendChild(titleSpan);
     var br = document.createElement('br');
     title.appendChild(br);
@@ -110,7 +100,7 @@ function AddEvent(event) {
 
     // Create the theme
     var themeSpan = document.createElement('span');
-    themeSpan.innerHTML = event.theme;
+    themeSpan.innerHTML = event.thème;
     eventPost.appendChild(themeSpan);
 
     // Add the post to the event list
@@ -120,49 +110,13 @@ function AddEvent(event) {
 
 function GetStatusColor(status) {
     switch (status) {
-        case 'evalue':
+        case 'évalué':
             return '--dl-color-status-evaluated';
-        case 'en attente':
-            return '--dl-color-status-watingresults';
+        case 'attente':
+            return '--dl-color-status-waitingresults';
         case 'en cours':
             return '--dl-color-status-inprogress';
         default:
             return '--dl-color-status-notstarted';
     }
 }
-
-
-/*
-<div class="event-post">
-    <span class="event-text16">
-        <span>Id unique</span>
-        <br />
-    </span>
-    <img
-        id="image"
-        alt="image"
-        src="https://play.teleporthq.io/static/svg/default-img.svg"
-        class="event-image1"
-    />
-    <h1>
-        <span>Title</span>
-        <br />
-    </h1>
-    <span>Theme du concours</span>
-</div>
-
-
-.event-post {
-  gap: var(--dl-space-space-halfunit);
-  flex: 0 0 auto;
-  display: flex;
-  padding: var(--dl-space-space-unit);
-  box-shadow: 5px 5px 10px 0px #d4d4d4;
-  align-items: flex-start;
-  border-color: #2E4053;
-  border-width: 1px;
-  border-radius: var(--dl-radius-radius-radius8);
-  flex-direction: column;
-  background-color: var(--dl-color-gray-white);
-}
-*/

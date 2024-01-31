@@ -71,7 +71,7 @@
               <span class="competitor-text06">Team</span>
               <span class="competitor-text07">Blog</span>
             </nav>
-            <div class="competitor-buttons">
+            <div class="home-buttons">
               <a href="login.html" class="competitor-login button">Login</a>
               <a href="register.html" class="competitor-register button">
                 Register
@@ -141,7 +141,7 @@
         </header>
         <div class="competitor-container1">
           <h1>Participer à un concourt</h1>
-          <form class="competitor-form">
+          <form class="competitor-form" id="upload_form">
             <select id="contest" required="true" class="competitor-select" title="Contest">
               <!-- 
               <option value="1">Contest 1</option>
@@ -152,6 +152,7 @@
               id="file"
               placeholder="placeholder"
               required="true"
+              accept="image/png, image/jpeg"
               class="competitor-textinput input"
             />
             <textarea
@@ -159,13 +160,14 @@
               placeholder="placeholder"
               class="competitor-textarea textarea"
             ></textarea>
-            <button type="button" class="competitor-button button" onclick="onSubmit()">
+            <button type="submit" class="competitor-button button" id="upload_image" onclick="onSubmit()">
               Envoyer
             </button>
           </form>
         </div>
       </div>
     </div>
+    <script src="../service/api.js"></script>
     <script src="../Scripts/competitor.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script

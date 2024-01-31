@@ -1,53 +1,55 @@
-function OnLoginClick() {
-    var email = document.getElementById("pseudo").value;
-    var password = document.getElementById("password").value;
-    var login = new Login(email, password);
-    login.Login();
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const onLoginClick = () => {
+        const email = document.getElementById("pseudo").value;
+        const password = document.getElementById("password").value;
+        const login = new Login(email, password);
+        login.login();
+    };
 
-function OnLoginSuccess(response) {
-    if (response && response.token) {
-        // Save token in the cookie
-        document.cookie = "token=" + response.token + ";";
-        // Redirect to the home page
-        window.location.href = "./index.html";
-    } else if (response && response.error) {
-        alert("Erreur de connexion : " + response.error);
-    } else {
-        alert("Une erreur inattendue s'est produite lors de la connexion.");
-    }
-}
-
-function OnLoginError(jqXHR, textStatus, errorThrown) {
-    var errorMessage = "Erreur AJAX lors de la connexion : " + textStatus;
-    if (errorThrown) {
-        errorMessage += "\n" + errorThrown;
-    }
-    alert(errorMessage);
-}
-
-// Class: Login
-function Login(email, password) {
-    this.email = email;
-    this.password = password;
-
-    this.Login = function() {
-        var data = {
-            email: this.email,
-            password: this.password
+    const onLoginSuccess = (response) => {
+        const userData = {
+            userId: response.id,
+            login: response.login,
+            name: response.name,
+            surname: response.surname,
+            role: response.role,
+            email: response.email,
         };
-    
-        $.ajax({
-            url: "http://localhost:8080/Backend/login.php",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function(response) {
-                OnLoginSuccess(response);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                OnLoginError(jqXHR, textStatus, errorThrown);
-            }
-        });
+        localStorage.clear();
+        localStorage.setItem('userData', JSON.stringify(userData));
+
+        window.location.href = '/SketchOnline/Frontend/Pages/indexlog.html';
+        alert('Vous êtes connecté en tant que : ' + response.role);
+    };
+
+    const onLoginError = (error) => {
+        const errorMessage = "Erreur lors de la connexion : " + error.statusText;
+        alert(errorMessage);
+    };
+
+    // Class: Login
+    class Login {
+        constructor(email, password) {
+            this.email = email;
+            this.password = password;
+        }
+
+        login() {
+            const data = {
+                email: this.email,
+                password: this.password
+            };
+
+            Api.request('/SketchOnline/Backend/login.php', 'post', data)
+                .then(response => {
+                    console.log(response.status);
+                    response.status === 'success' ? onLoginSuccess(response) : onLoginError(response);
+                })
+                .catch(() => {
+                    console.error('Une erreur s\'est produite');
+                });
+        }
     }
-}
+
+    document.querySelector('.login-button').addEventListener('click', onLoginClick);
+});

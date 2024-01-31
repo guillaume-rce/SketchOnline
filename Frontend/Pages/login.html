@@ -48,13 +48,13 @@
       <link href="../Styles/login.css" rel="stylesheet" />
 
       <div class="login-container">
-        <form class="login-form">
+        <div class="login-form">
           <input
             type="text"
             id="pseudo"
             name="pseudo"
             required=""
-            placeholder="Pseudo"
+            placeholder="Email"
             class="login-textinput input"
           />
           <input
@@ -75,7 +75,7 @@
               class="login-checkbox"
             />
           </div>
-          <button name="submit" type="button" class="login-button button" onclick="OnLoginClick()">
+          <button name="submit" type="button" class="login-button button" >
             <span>
               <span>Sign in</span>
               <br />
@@ -85,11 +85,11 @@
             <span>If it is your first time, <a href="./register.html"><u>register</u></a>!</span>
             <br />
           </span>
-        </form>
+        </div>
       </div>
     </div>
-    
-    <script src="../Scripts/login.js"></script>
+    <script src="../service/api.js" ></script>
+    <script  src="../Scripts/login.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script
       defer=""

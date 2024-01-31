@@ -47,8 +47,8 @@
     <div>
       <link href="../Styles/register.css" rel="stylesheet" />
 
-      <div class="register-container"  id="registrationForm" method="post" action="../../Backend/inscription.php">
-        <form class="register-form">
+      <div class="register-container"  id="registrationForm">
+        <div class="register-form">
           <input
             type="text"
             id="pseudo"
@@ -99,10 +99,11 @@
             <span>If you already have an account, <a href="./login.html"><u>login</u></a>!</span>
             <br />
           </span>
-        </form>
+        </div>
       </div>
     </div>
-    <script src="../Scripts/register.js"></script>
+    <script src="../service/api.js" ></script>
+    <script src="../Scripts/register.js" ></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script
       defer=""

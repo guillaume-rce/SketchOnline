@@ -1,43 +1,34 @@
-const token = getCookie('token');
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('userData') !== null) {
+        // Get the profile infos
+        GetProfileInfos();
 
-if (token) {
-    console.log('User is logged in');
-    GetProfileInfos();
-} else {
-    console.log('User is not logged in');
-}
-
-function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return cookieValue ? cookieValue.pop() : '';
-}
-
-function GetProfileInfos() {
-        
-    if (typeof token === 'undefined') {
-        console.error("Le token n'est pas défini.");
-        return;
     }
-    var data = {
-        token: token,
-        infos: ['photo', 'rank']
+    });
+document.getElementById('disconnect').addEventListener('click', function() {
+    localStorage.removeItem('userData');
+    window.location.href = '/SketchOnline/Frontend/Pages/index.html';
+});
+function GetProfileInfos() {
+    var data = localStorage.getItem('userData');    
+    var id = JSON.parse(data).userId;
+
+    var postData = {
+        userId: id
     };
 
-    $.ajax({
-        url: "http://localhost:8080/Backend/profile.php",
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function(data) {
-            OnProfileInfosSuccess(data);
-        },
-        error: function(error) {
-            OnProfileInfosError(error);
-        }
-    });
+    Api.request("/SketchOnline/Backend/competitions.php", "POST", postData)
+        .then(response => {
+            console.log(response.status);
+            response.status === 'success' ? OnProfileInfosSuccess(response) : OnProfileInfosError(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function OnProfileInfosSuccess(data) {
+    var data = localStorage.getItem('userData');    
     // data = {
     //     photo: 'https://xxxxx.xx/xxxx/xxxx.jpg',
     //     rank: 'xxxx'
@@ -52,9 +43,11 @@ function OnProfileInfosSuccess(data) {
 
     // Create the home-profile-image element
     var homeProfileImage = document.createElement('img');
-    homeProfileImage.src = data.photo;
+    var photo = typeof(JSON.parse(data).photo) == "undefined" || JSON.parse(data).photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
+    homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
+    homeProfileImage.onclick = onRedirectToMy;
 
     // Change the color of the home-profile-image border
     homeProfileImage.style.borderColor = GetColorVar(data.rank);
@@ -77,36 +70,9 @@ function GetColorVar(rank) {
             return 'var(--dl-color-rank-director)';
         case 'competitor':
             return 'var(--dl-color-rank-competitor)';
-        case 'evaluator':
+        case 'admin':
             return 'var(--dl-color-rank-evaluator)';
         default:
             return 'var(--dl-color-rank-user)';
     }
 }
-
-/*
-
-<div class="home-profile">
-    <img
-    src="https://play.teleporthq.io/static/svg/default-img.svg"
-    alt="image"
-    class="home-profile-image"
-    />
-</div>
-
-
-.home-profile {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.home-profile-image {
-  width: 60px;
-  object-fit: cover;
-  border-color: var(--dl-color-gray-black);
-  border-width: 4px;
-  border-radius: var(--dl-radius-radius-round);
-}
-
-*/
