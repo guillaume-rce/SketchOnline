@@ -1,8 +1,9 @@
-[//]: <> (Version du readme: 3.2)
+[//]: <> (Version du readme: 3.3)
 # SketchOnline
 
-![Logo](Documentation/readme/logo.png)
+[<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
 
+[**Accès au site web**](http://20.39.244.13:1956/SketchOnline/Frontend/Pages/index.html)
 
 ## Spécifications du projet 
 
@@ -226,3 +227,9 @@ Le frontend est structuré de manière à offrir une expérience utilisateur flu
 - **`Pages`**: Inclut les fichiers HTML pour chaque page du site, comme la page d'accueil, la page de connexion, la galerie, etc.
 - **`Scripts`**: Scripts JavaScript pour ajouter une interactivité client-side, comme les validations de formulaires et les interactions dynamiques.
 - **`Styles`**: Fichiers CSS pour le style et la mise en page du site. Chaque page a son propre fichier CSS correspondant.
+
+## Contributions
+
+### Équipe
+
+- **Steve Noumi** - *Développeur Backend* - [Acces profil](https://github.com/stevenoumi)
