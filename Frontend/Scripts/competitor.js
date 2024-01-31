@@ -58,27 +58,37 @@ function onSubmit() {
     var contestId = document.getElementById("contest").value;
     var file = document.getElementById("file").files[0];
     var comment = document.getElementById("comment").value;
-
     var data = localStorage.getItem('userData');    
     var userId = JSON.parse(data).id;
 
-    // Erreur dans l'envoi de l'image, pas de message mais l'image n'est pas envoyée
-    var uploadData = new FormData(document.getElementById("upload_form"), document.getElementById("upload_image"));
-    uploadData.append("type_of_upload", "drawing");
-    uploadData.append("contest_id", contestId);
-    uploadData.append("user_id", userId);
-    uploadData.append("fileToUpload", file);
 
-    Api.request("/SketchOnline/Backend/create/upload.php", "POST", uploadData)
-        .then(response => {
-            console.log(response);
-            response.status === 'success' ? OnUploadSuccess(response, contestId, comment, userId) : OnUploadError(response);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
+        if (file) {
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('type_of_upload', 'drawing');
+            formData.append('contest_id', contestId);
+            formData.append('user_id', userId);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/SketchOnline/Backend/create/upload.php', true);
+    
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('uploadStatus').innerHTML = xhr.responseText;
+                    OnUploadSuccess(response, contestId, comment, userId);
+                }else{
+                    document.getElementById('uploadStatus').innerHTML = 'Erreur lors de l\'upload du fichier';
+                    OnUploadError(response);
 
+                }
+            };
+    
+            xhr.send(formData);
+        } else {
+            alert('Veuillez sélectionner un fichier.');
+        }
+    }
+    
 function OnUploadSuccess(data, contestId, comment, userId) {
     // if uplaod success, send the drawing data
     var path = data.path;

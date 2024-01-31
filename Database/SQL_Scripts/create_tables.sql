@@ -1,7 +1,7 @@
 -- Création de la base de données
-CREATE DATABASE IF NOT EXISTS SketchBd;
+CREATE DATABASE IF NOT EXISTS SketchOnlineDatabase;
 -- Utilisation de la base de données
-USE SketchBd;
+USE SketchOnlineDatabase;
 
 -- Suppression des tables si elles existent déjà
 DROP TABLE IF EXISTS Jury;
@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS Evaluateur;
 DROP TABLE IF EXISTS Utilisateurs;
 DROP TABLE IF EXISTS Administrateur;
 DROP TABLE IF EXISTS Directeur;
-DROP TABLE IF EXISTS Président;
+DROP TABLE IF EXISTS President;
 DROP TABLE IF EXISTS Concours;
 DROP TABLE IF EXISTS Club;
 
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS Club;
 
 -- Table des clubs
 CREATE TABLE Club (
-    numClub INT PRIMARY KEY AUTO_INCREMENT,
+    numClub INT PRIMARY KEY,
     nomClub VARCHAR(255),
     adresse VARCHAR(255),
     numTelephone VARCHAR(20),
@@ -31,24 +31,6 @@ CREATE TABLE Club (
     ville VARCHAR(255),
     departement VARCHAR(255),
     region VARCHAR(255)
-);
-
--- Table des compétiteurs
-CREATE TABLE Competiteur (
-    numCompetiteur INT PRIMARY KEY AUTO_INCREMENT,
-    datePremiereParticipation DATE
-);
-
--- Table des concours
-CREATE TABLE Concours (
-    numConcours INT PRIMARY KEY AUTO_INCREMENT,
-    numPres INT,
-    titre VARCHAR(255),
-    theme VARCHAR(255),
-    affiche VARCHAR(255),
-    dateDebut DATE,
-    dateFin DATE,
-    etat ENUM('pas commence', 'en cours', 'en attente', 'evalue')
 );
 
 -- Table des utilisateurs
@@ -66,23 +48,50 @@ CREATE TABLE Utilisateurs (
 
 -- Table des directeurs
 CREATE TABLE Directeur (
-    numDirecteur INT PRIMARY KEY AUTO_INCREMENT,
+    numDirecteur INT PRIMARY KEY,
     dateDebut DATE,
     FOREIGN KEY (numDirecteur) REFERENCES Utilisateurs(numUtilisateur)
 );
 
 -- Table des administrateurs
 CREATE TABLE Administrateur (
-    numAdmin INT PRIMARY KEY AUTO_INCREMENT,
+    numAdmin INT PRIMARY KEY,
     dateDebut DATE,
     FOREIGN KEY (numAdmin) REFERENCES Utilisateurs(numUtilisateur)
 );
 
--- Table des présidents
+-- Table des presidents
 CREATE TABLE President (
-    numPres INT PRIMARY KEY AUTO_INCREMENT,
+    numPres INT PRIMARY KEY,
     prime VARCHAR(255),
     FOREIGN KEY (numPres) REFERENCES Utilisateurs(numUtilisateur)
+);
+
+-- Table des évaluateurs
+CREATE TABLE Evaluateur (
+    numEvaluateur INT PRIMARY KEY,
+    specialite VARCHAR(255)
+);
+
+-- Table des compétiteurs
+CREATE TABLE Competiteur (
+    numCompetiteur INT PRIMARY KEY,
+    datePremiereParticipation DATE
+);
+
+-- Table des concours
+CREATE TABLE Concours (
+    numConcours INT PRIMARY KEY AUTO_INCREMENT,
+    numPres INT,
+    titre VARCHAR(255),
+    theme VARCHAR(255),
+    affiche VARCHAR(255),
+    description TEXT,
+    regles TEXT,
+    criteres TEXT,
+    dateDebut DATE,
+    dateFin DATE,
+    etat ENUM('pas commence', 'en cours', 'en attente', 'evalue')
 );
 
 -- Table des dessins
@@ -102,19 +111,13 @@ CREATE TABLE Dessin (
 
 -- Table des évaluations
 CREATE TABLE Evaluation (
-    numEvaluateur INT PRIMARY KEY AUTO_INCREMENT,
+    numEvaluateur INT PRIMARY KEY,
     numDessin INT,
     dateEvaluation DATE,
     note INT,
     commentaire TEXT,
     FOREIGN KEY (numEvaluateur) REFERENCES Evaluateur(numEvaluateur),
     FOREIGN KEY (numDessin) REFERENCES Dessin(numDessin)
-);
-
--- Table des évaluateurs
-CREATE TABLE Evaluateur (
-    numEvaluateur INT PRIMARY KEY AUTO_INCREMENT,
-    specialite VARCHAR(255)
 );
 
 -- Table associant un club à son directeur

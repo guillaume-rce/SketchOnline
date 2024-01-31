@@ -1,68 +1,52 @@
 <?php
-/*
-FormData(
-    {
-        type_of_upload: type_of_upload,
-        contest_id: contest_id,
-        user_id: user_id, // facultatif
-        fileToUpload: fileToUpload
-    }
-)
-*/
-$target_dir = "../../Uploads/"; // Spécifiez le répertoire où le fichier sera sauvegardé
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $targetDir = "/SketchOnline/Uploads";
+    $targetFile = $targetDir . basename($_FILES["file"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
 
-$type_of_upload = $_POST["type_of_upload"] ?? null;
-$contest_id = $_POST["contest_id"] ?? null;
-$user_id = $_POST["user_id"] ?? null;
-
-switch ($type_of_upload) {
-    case "contest":
-        $target_subdir = createFolder($target_dir, array("contest", $contest_id));
-        $target_file = $target_subdir . basename($contest_id);
-        break;
-    case "drawing":
-        $target_subdir = createFolder($target_dir, array("contest", $contest_id, "drawing", $user_id));
-        $target_file = $target_subdir . basename($user_id);
-        break;
-    default:
-        throw new Exception("Type de téléchargement non reconnu: $type_of_upload");
-        
-}
-
-// Creer un fonction qui prend en parametre les sous dossiers (le nombre n'est pas fixe) et qui les creer dans le serveur puis renvoi le chemin du fichier
-// Exemple: Uploads/contest_1/drawing_1/
-$DIRECTORY_SEPARATOR = "/";
-function createFolder($target_dir, $subfolders) {
-    $path = rtrim($target_dir, $DIRECTORY_SEPARATOR) . $DIRECTORY_SEPARATOR;
-    foreach ($subfolders as $subfolder) {
-        $path .= trim($subfolder) . $DIRECTORY_SEPARATOR;
-        if (!file_exists($path) && !mkdir($path, 0755, true)) {
-            // Gérer l'erreur si le dossier ne peut pas être créé
-            throw new Exception("Impossible de créer le dossier: $path");
+    // Vérifie si le fichier est une image
+    if(isset($_POST["submit"])) {
+        $check = getimagesize($_FILES["file"]["tmp_name"]);
+        if($check !== false) {
+            echo "Le fichier est une image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "Le fichier n'est pas une image.";
+            $uploadOk = 0;
         }
     }
-    return $path;
-}
 
+    // Vérifie si le fichier existe déjà
+    if (file_exists($targetFile)) {
+        echo "Désolé, le fichier existe déjà.";
+        $uploadOk = 0;
+    }
 
-$file = $_FILES["fileToUpload"];
+    // Vérifie la taille du fichier
+    if ($_FILES["file"]["size"] > 500000) {
+        echo "Désolé, le fichier est trop volumineux.";
+        $uploadOk = 0;
+    }
 
-if(isset($file["tmp_name"])) {
-    if (move_uploaded_file($file["tmp_name"], $target_file)) {
-        echo json_encode(["status" => "success", 
-            "message" => "Le fichier ". htmlspecialchars( basename( $file["name"])). " a été téléchargé.",
-            "path" => $target_file]);
+    // Autorise certains formats de fichiers
+    $allowedFormats = array("jpg", "jpeg", "png", "gif");
+    if (!in_array($imageFileType, $allowedFormats)) {
+        echo "Désolé, seuls les fichiers JPG, JPEG, PNG et GIF sont autorisés.";
+        $uploadOk = 0;
+    }
 
+    // Vérifie si $uploadOk est défini à 0
+    if ($uploadOk == 0) {
+        echo "Le fichier n'a pas été téléchargé.";
     } else {
-        echo json_encode(["status" => "failure",
-            "message" => "Erreur lors du téléchargement du fichier.",
-            "path" => null]);
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
+            echo "Le fichier ". htmlspecialchars(basename( $_FILES["file"]["name"])). " a été téléchargé.";
+        } else {
+            echo "Il y a eu une erreur lors du téléchargement du fichier.";
+        }
     }
 } else {
-    echo json_encode(["status" => "failure",
-        "message" => "Erreur lors du téléchargement du fichier.",
-        "path" => null]);
+    echo "Accès non autorisé.";
 }
-
-exit;
 ?>
