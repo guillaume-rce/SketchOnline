@@ -1,9 +1,36 @@
-[//]: <> (Version du readme: 3.3)
+[//]: <> (Version du readme: 4.0)
 # SketchOnline
 
 [<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
 
+## Testez le projet
+
+### Site web
 [**Accès au site web**](http://20.39.244.13:1956/SketchOnline/Frontend/Pages/index.html)
+
+Identifiants de test:
+- **Administrateur:**
+    - **Identifiant:** integer.urna@yahoo.com
+    - **Mot de passe:** Clb15
+- **Président:**
+    - **Identifiant:** aenean.eget@gmail.com
+    - **Mot de passe:** Clb2
+- **Directeur:**
+    - **Identifiant:** sed.dictum@gmail.com
+    - **Mot de passe:** Clb2
+- **Évaluateur:**
+    - **Identifiant:** eros.nec@gmail.com
+    - **Mot de passe:** Clb1
+- **Membre:**
+    - **Identifiant:** dapibus@protonmail.com
+    - **Mot de passe:** Clb1
+    
+### Fichiers de test
+
+Executer la commande suivante pour lancer le script de test:
+```bash
+./launch-code.sh
+```
 
 ## Spécifications du projet 
 
@@ -43,6 +70,16 @@
 - **Évaluations :** Commentaires, note.
 - **Utilisateurs :** ID unique, informations personnelles.
 - **Fonctionnalités supplémentaires :** Suggestions bienvenues.
+
+## Fonctionnalités du projet
+
+- Systeme de login et de register
+- Systeme de déconnexion
+- Systeme de gestion des roles
+- Affichage des concours avec les informations de base
+- Affichage des dessins évalués et liker
+- Systeme de soumission de dessin
+- Systeme d'ajout de concours
 
 ## Diagramme conceptuel
 
@@ -195,9 +232,6 @@ SketchOnline/
 └── vm-SteveNoumi_key.pem
 ```
 
-D'accord, je vais rédiger une section additionnelle pour votre fichier README qui décrit les composants clés du projet "SketchOnline". Vous pourrez l'ajouter directement à votre fichier existant.
-
-
 ### Structure et Fonctionnalités du Projet
 
 #### Backend
@@ -213,6 +247,18 @@ Le backend de `SketchOnline` est développé en PHP et joue un rôle crucial dan
 Le dossier `Database` comprend des scripts SQL essentiels pour la structure de la base de données.
 
 - **`SQL_Scripts`**: Contient les scripts pour créer et maintenir les structures de la base de données, comme les tables pour les utilisateurs, les clubs, et les concours.
+
+##### Précision sur le script SQL
+
+1. **Objectif** : Ce script SQL est conçu pour peupler une base de données, nommée `SketchOnlineDatabase`, avec des données initiales.
+
+2. **Contenu** :
+   - **Base de données ciblée** : Le script commence par sélectionner la base de données à utiliser avec la commande `USE SketchOnlineDatabase;`.
+   - **Insertion de données dans la table `Club`** : Plusieurs instructions `INSERT INTO` sont utilisées pour ajouter des données dans la table `Club`. Chaque insertion spécifie des valeurs pour les colonnes `numClub`, `nomClub`, `adresse`, `numTelephone`, `nombreAdherants`, `ville`, `departement`, et `region`.
+
+3. **Exemple d'insertion** : 
+   - `INSERT INTO Club (...) VALUES (701, 'Les Créatifs Pinceaux', '123 Rue Principale', '0123456789', 20, 'Angers', 'Maine-et-Loire', 'Pays de la Loire');`
+   - Cette commande insère un enregistrement pour un club nommé 'Les Créatifs Pinceaux' situé à Angers.
 
 #### Documentation
 Des documents importants pour comprendre et gérer le projet.
@@ -232,4 +278,12 @@ Le frontend est structuré de manière à offrir une expérience utilisateur flu
 
 ### Équipe
 
-- **Steve Noumi** - *Développeur Backend* - [Acces profil](https://github.com/stevenoumi)
+- **Steve Darius NDE NOUMI** - *Développeur Backend* - [Acces profil](https://github.com/stevenoumi)
+- **Guillaume ROCHE** - *Développeur Frontend* - [Acces profil](https://github.com/GuillaumeROCHE49)
+- **Clemence MAIGNAN** - *Definition du projet et remplissage de la base de données* - [Acces profil](https://github.com/Sapph49)
+- **Milaine Miriam DAMKAM** - *Definition du projet et definition des articles* - [Acces profil](https://github.com/MilaineMiriam)
+
+### Contributeurs
+
+- **M. HAMMOUDI Slimane** - *Professeur*
+- **Mme. ABDALLAH  Maïssa** - *Professeur*
