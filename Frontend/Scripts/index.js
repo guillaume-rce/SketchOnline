@@ -45,6 +45,7 @@ function OnProfileInfosSuccess(data) {
     disconnectButton.onclick = disconnect;
     disconnectButton.textContent = 'Logout';
     disconnectButton.classList.add('disconnect');
+    homeButtons.appendChild(disconnectButton);
 
     // Create the home-profile element
     homeButtons.classList.remove('home-buttons');
