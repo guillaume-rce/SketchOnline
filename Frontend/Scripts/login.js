@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.clear();
         localStorage.setItem('userData', JSON.stringify(userData));
 
-        window.location.href = '/SketchOnline/Frontend/Pages/indexlog.html';
+        window.location.href = '/SketchOnline/Frontend/Pages/index.html';
     };
 
     const onLoginError = (error) => {
