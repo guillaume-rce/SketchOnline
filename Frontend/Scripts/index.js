@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
     });
-document.getElementById('disconnect').addEventListener('click', function() {
+
+function disconnect() {
     localStorage.removeItem('userData');
     window.location.href = '/SketchOnline/Frontend/Pages/index.html';
-});
+}
+
 function GetProfileInfos() {
     var data = localStorage.getItem('userData');    
     var id = JSON.parse(data).userId;
@@ -37,6 +39,12 @@ function OnProfileInfosSuccess(data) {
 
     // Get the home-buttons element
     var homeButtons = document.getElementById('home-connection');
+
+    var disconnectButton = document.createElement('button');
+    disconnectButton.id = 'disconnect';
+    disconnectButton.onclick = disconnect;
+    disconnectButton.textContent = 'Logout';
+    disconnectButton.classList.add('disconnect');
 
     // Create the home-profile element
     homeButtons.classList.remove('home-buttons');

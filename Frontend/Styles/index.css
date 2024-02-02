@@ -73,10 +73,12 @@
 }
 
 .home-profile {
+  gap: var(--dl-space-space-unit);
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+
 }
 .home-profile-image {
   width: 60px;
@@ -194,7 +196,7 @@
   background-size: cover;
   justify-content: center;
   background-repeat:no-repeat;
-    background-position: center center;
+  background-position: center center;
   background-image: url("../assets/home_bg.png");
 }
 .home-container1 {
