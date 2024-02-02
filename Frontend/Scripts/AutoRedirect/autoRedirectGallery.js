@@ -6,5 +6,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function RedirectLog() {
-    window.location.href = "/SketchOnline/Frontend/Pages/galerylog.html";
+    window.location.href = "/SketchOnline/Frontend/Pages/gallerylog.html";
 }
