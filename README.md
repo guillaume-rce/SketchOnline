@@ -1,4 +1,4 @@
-[//]: <> (Version du readme: 4.0)
+[//]: <> (Version du readme: 4.1)
 # SketchOnline
 
 [<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
@@ -10,7 +10,7 @@
 
 Identifiants de test:
 - **Administrateur:**
-    - **Identifiant:** integer.urna@yahoo.com
+    - **Identifiant:** integerurna@yahoo.com
     - **Mot de passe:** Clb15
 - **Président:**
     - **Identifiant:** aenean.eget@gmail.com
