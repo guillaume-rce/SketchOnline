@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('userData') !== null) {
         // Get the profile infos
+        getUserRole();
         GetProfileInfos();
 
     }
@@ -41,20 +42,46 @@ function OnProfileInfosSuccess(data) {
     homeButtons.classList.remove('home-buttons');
     homeButtons.classList.add('home-profile');
 
+    // Get the user role
+    var lerole = localStorage.getItem('role');
     // Create the home-profile-image element
     var homeProfileImage = document.createElement('img');
     var photo = typeof(JSON.parse(data).photo) == "undefined" || JSON.parse(data).photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
     homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
-    homeProfileImage.onclick = onRedirectToMy;
+    homeProfileImage.onclick = onRedirectToMy(lerole);
 
     // Change the color of the home-profile-image border
-    homeProfileImage.style.borderColor = GetColorVar(data.rank);
-
+    homeProfileImage.style.borderColor = GetColorVar(lerole);
     // Add the home-profile-image element to the home-profile element
     homeButtons.appendChild(homeProfileImage);
 }
+function getUserRole() {
+    var data = localStorage.getItem('userData');    
+    var id = JSON.parse(data).userId;
+
+    Api.request("/SketchOnline/Backend/getRole.php", "POST", {"userId": id})
+        .then(lareponse => {
+            console.log(lareponse.status);
+            lareponse.status === 'success' ? OnRoleSuccess(lareponse) : OnRoleError(lareponse);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+function OnRoleSuccess(response) {
+   localStorage.setItem('role', response.role);
+   console.log("la reponse du serveur est " + response.role);
+   console.log("le role est " + localStorage.getItem('role'));
+
+    }
+
+function OnRoleError(response) {
+    console.log(response);
+}   
+
 
 function OnProfileInfosError(error) {
     console.log(error);
@@ -74,5 +101,27 @@ function GetColorVar(rank) {
             return 'var(--dl-color-rank-evaluator)';
         default:
             return 'var(--dl-color-rank-user)';
+    }
+}
+
+// rediect to my page
+function onRedirectToMy(role) {
+    console.log(role);
+    switch (role) {
+        case 'admin':
+            window.location.href = "/SketchOnline/Frontend/Pages/admin.html";
+            break;
+        case 'director':
+            window.location.href = "/SketchOnline/Frontend/Pages/director.html";
+            break;
+        case 'president':
+            window.location.href = "/SketchOnline/Frontend/Pages/president.html";
+            break;
+        case 'competitor':
+            window.location.href = "/SketchOnline/Frontend/Pages/competitor.html";
+            break;
+        default:
+            window.location.href = "/SketchOnline/Frontend/Pages/indexlog.html";
+            break;
     }
 }

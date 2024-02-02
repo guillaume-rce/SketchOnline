@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('userData', JSON.stringify(userData));
 
         window.location.href = '/SketchOnline/Frontend/Pages/indexlog.html';
-        alert('Vous êtes connecté en tant que : ' + response.role);
     };
 
     const onLoginError = (error) => {
@@ -50,6 +49,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
     }
-
     document.querySelector('.login-button').addEventListener('click', onLoginClick);
 });
