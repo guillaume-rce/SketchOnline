@@ -1,10 +1,10 @@
 cd ../
-scp -i SketchOnline/vm-SteveNoumi_key.pem -r SketchOnline/ stevenoumi@20.39.244.13:/home/stevenoumi/
+scp -i vm-SteveNoumi_key.pem -r SketchOnline/Frontend stevenoumi@20.39.244.13:/home/stevenoumi/
 
-ssh -i SketchOnline/vm-SteveNoumi_key.pem stevenoumi@20.39.244.13 << EOF
+ssh -i vm-SteveNoumi_key.pem stevenoumi@20.39.244.13 << EOF
     sudo -i
-    rm -rf /srv/siteweb/SketchOnline
-    cp -r /home/stevenoumi/SketchOnline/ /srv/siteweb/
+    rm -rf /srv/siteweb/SketchOnline/Frontend
+    cp -r /home/stevenoumi/SketchOnline/Frontend /srv/siteweb/
     systemctl restart apache2.service
 EOF
 
