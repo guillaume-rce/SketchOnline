@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the profile infos
         getUserRole();
         GetProfileInfos();
+        detectUrl();
 
     }
     });
@@ -121,7 +122,7 @@ function onRedirectToMy() {
     console.log(role);
     switch (role) {
         case 'admin':
-            window.location.href = "/SketchOnline/Frontend/Pages/administrator.html";
+            window.location.href = "/SketchOnline/Frontend/Pages/admin.html";
             break;
         case 'director':
             window.location.href = "/SketchOnline/Frontend/Pages/director.html";
@@ -134,6 +135,42 @@ function onRedirectToMy() {
             break;
         default:
             window.location.href = "/SketchOnline/Frontend/Pages/indexlog.html";
+            break;
+    }
+}
+
+// rediect to the 404 page if the url is not correct
+function redirectTo404() {
+    window.location.href = "/SketchOnline/Frontend/Pages/404.html";
+}
+// detect the url and redirect to the 404 page if the url is not correct
+function detectUrl() {
+    var url = window.location.href;
+    var urlArray = url.split('/');
+    var page = urlArray[urlArray.length - 1];
+    console.log(page);
+    switch (page) {
+        case 'administrator.html':
+            if (localStorage.getItem('role') !== 'admin') {
+                redirectTo404();
+            }
+            break;
+        case 'director.html':
+            if (localStorage.getItem('role') !== 'director' && localStorage.getItem('role') !== 'admin'){
+                redirectTo404();
+            }
+            break;
+        case 'president.html':
+            if (localStorage.getItem('role') !== 'president' && localStorage.getItem('role') !== 'admin'{
+                redirectTo404();
+            }
+            break;
+        case 'competitor.html':
+            if (localStorage.getItem('role') !== 'competitor' && localStorage.getItem('role') !== 'admin' && localStorage.getItem('role') !== 'director' && localStorage.getItem('role') !== 'president'){
+                redirectTo404();
+            }
+            break;
+        default:
             break;
     }
 }
