@@ -4,7 +4,27 @@ document.addEventListener('DOMContentLoaded', function () {
     Getgallerys();
 });
 
+function OnGetgallerysSuccess(data) {
+    // data = {
+    // "gallerys": [
+	// 	   {
+	// 		"numDessin": 2,
+	// 		"numCompetiteur": 3,
+	// 		"numConcours": 402,
+	// 		"numEvaluateur": 29,
+	// 		"commentaire": "Animaux",
+	// 		"classement": 1,
+	// 		"dateRemise": "2022-01-15",
+	// 		"leDessin": "\/SketchOnline\/Uploads\/Drawing\/6.png"
+	//  	}
+    // };
 
+    // Loop through the events
+    for (var i = 0; i < data.gallerys.length; i++) {
+        // Add the event to the event list
+        Addgallery(data.gallerys[i]);
+    }
+}
 function OnGetgallerysError(jqXHR, textStatus, errorThrown) {
     console.log("OnGetgallerysError called with jqXHR, textStatus, errorThrown:", jqXHR, textStatus, errorThrown);
     var errorMessage = "Erreur AJAX lors de la connexion : " + textStatus;
