@@ -43,17 +43,16 @@ function OnProfileInfosSuccess(data) {
     homeButtons.classList.add('home-profile');
 
     // Get the user role
-    var lerole = localStorage.getItem('role');
     // Create the home-profile-image element
     var homeProfileImage = document.createElement('img');
     var photo = typeof(JSON.parse(data).photo) == "undefined" || JSON.parse(data).photo === null ? '/SketchOnline/Frontend/assets/default_profile_image.jpg' : data.photo; 
     homeProfileImage.src = photo;
     homeProfileImage.alt = 'Profile image';
     homeProfileImage.classList.add('home-profile-image');
-    homeProfileImage.onclick = onRedirectToMy(lerole);
-
+    // add the click event to the home-profile-image element
+    homeProfileImage.onclick = onRedirectToMy;
     // Change the color of the home-profile-image border
-    homeProfileImage.style.borderColor = GetColorVar(lerole);
+    homeProfileImage.style.borderColor = GetColorVar(localStorage.getItem('role'));
     // Add the home-profile-image element to the home-profile element
     homeButtons.appendChild(homeProfileImage);
 }
@@ -105,7 +104,9 @@ function GetColorVar(rank) {
 }
 
 // rediect to my page
-function onRedirectToMy(role) {
+
+function onRedirectToMy() {
+    let role = localStorage.getItem('role');
     console.log(role);
     switch (role) {
         case 'admin':
