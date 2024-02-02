@@ -39,6 +39,8 @@ function OnProfileInfosSuccess(data) {
 
     // Get the home-buttons element
     var homeButtons = document.getElementById('home-connection');
+    // Clear all the children of the home-buttons element
+    homeButtons.innerHTML = '';
 
     var disconnectButton = document.createElement('button');
     disconnectButton.id = 'disconnect';
