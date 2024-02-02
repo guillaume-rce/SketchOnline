@@ -121,7 +121,7 @@ function onRedirectToMy() {
     console.log(role);
     switch (role) {
         case 'admin':
-            window.location.href = "/SketchOnline/Frontend/Pages/admin.html";
+            window.location.href = "/SketchOnline/Frontend/Pages/administrator.html";
             break;
         case 'director':
             window.location.href = "/SketchOnline/Frontend/Pages/director.html";
