@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         localStorage.clear();
         localStorage.setItem('userData', JSON.stringify(userData));
-
+        alert("Connexion réussie");
         window.location.href = '/SketchOnline/Frontend/Pages/index.html';
     };
 
