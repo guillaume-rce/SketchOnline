@@ -3,6 +3,9 @@
 
 [<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
 
+[![License](https://img.shields.io/badge/license-Personal%20Use%20License-blue.svg)](LICENSE.md)
+[![Last Commit](https://img.shields.io/github/last-commit/guillaume-rce/SketchOnline)](https://github.com/guillaume-rce/SketchOnline)
+
 ## Testez le projet
 
 ### Site web
