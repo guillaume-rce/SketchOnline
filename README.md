@@ -1,9 +1,9 @@
-[//]: <> (Version du readme: 4.2)
+[//]: <> (Version du readme: 4.3)
 # SketchOnline
 
 [<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
 
-[![License](https://img.shields.io/badge/license-Personal%20Use%20License-blue.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-blue.svg)](LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/guillaume-rce/SketchOnline)](https://github.com/guillaume-rce/SketchOnline)
 
 ## Testez le projet
