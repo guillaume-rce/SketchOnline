@@ -1,4 +1,4 @@
-[//]: <> (Version du readme: 4.1)
+[//]: <> (Version du readme: 4.2)
 # SketchOnline
 
 [<img src="Documentation/readme/logo.png" width="300"/>](Documentation/readme/logo.png)
